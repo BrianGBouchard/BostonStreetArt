@@ -23,18 +23,42 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
     @IBOutlet var artistLabel: UILabel!
     @IBOutlet var addressLabl: UILabel!
     @IBOutlet var artworkInfo: UITextView!
+    @IBOutlet var addImageLabel: UILabel!
+
+    var selectedArtwork: Artwork?
+    var initialViewController: MapViewController?
+    let dataRef = Database.database().reference(withPath: "Artworks")
 
     let picker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        addImageLabel.isHidden = true
         activity.hidesWhenStopped = true
         picker.delegate = self
-        let imageref = Storage.storage().reference(withPath: "image1")
-        imageref.getData(maxSize: 100000000) { (imagedata, error) in
-            self.activity.startAnimating()
-            if let data = imagedata {
-                self.imageView.image = UIImage(data: data)
+        activity.startAnimating()
+        if let artUnwrapped = self.selectedArtwork {
+            self.titleLabel.text! = artUnwrapped.artTitle
+            self.artistLabel.text! = artUnwrapped.artist
+            self.addressLabl.text! = artUnwrapped.address
+            self.artworkInfo.text = artUnwrapped.info
+            /*if let num = artUnwrapped.numID {
+                let imageref = Storage.storage().reference(withPath: "\(num)")
+                imageref.getData(maxSize: 100000000) { (imagedata, error) in
+                    if let data = imagedata {
+                        self.imageView.image = UIImage(data: data)
+                        self.activity.stopAnimating()
+                    } else {
+                        self.addImageLabel.isHidden = false
+                        self.activity.stopAnimating()
+                    }
+                }
+            }*/
+            if let pic = self.selectedArtwork!.image {
+                self.imageView.image = pic
+                self.activity.stopAnimating()
+            } else {
+                self.addImageLabel.isHidden = false
                 self.activity.stopAnimating()
             }
         }
@@ -72,6 +96,16 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             })
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
+                    self.dataRef.child(String(self.selectedArtwork!.numID!)).child("Title").setValue(editAlert.textFields![0].text!)
+                    self.selectedArtwork?.artTitle = editAlert.textFields![0].text!
+                    if let mapViewController = self.initialViewController {
+                        for item in mapViewController.bostonMap.annotations {
+                            if (item as! Artwork).numID == self.selectedArtwork?.numID {
+                                mapViewController.bostonMap.removeAnnotation(item)
+                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            }
+                        }
+                    }
                     self.titleLabel.text = editAlert.textFields![0].text!
                 } else {
                     return
@@ -97,6 +131,17 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             })
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
+                    self.dataRef.child(String(self.selectedArtwork!.numID!)).child("Artist").setValue(editAlert.textFields![0].text!)
+                    self.selectedArtwork!.artist = editAlert.textFields![0].text!
+                    if let mapViewController = self.initialViewController {
+                        for item in mapViewController.bostonMap.annotations {
+                            if (item as! Artwork).numID == self.selectedArtwork?.numID {
+                                mapViewController.bostonMap.removeAnnotation(item)
+                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            }
+                        }
+                    }
+                    
                     self.artistLabel.text = editAlert.textFields![0].text!
                 } else {
                     return
@@ -122,6 +167,16 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             })
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
+                    self.dataRef.child(String(self.selectedArtwork!.numID!)).child("Location").setValue(editAlert.textFields![0].text!)
+                    self.selectedArtwork!.address = editAlert.textFields![0].text!
+                    if let mapViewController = self.initialViewController {
+                        for item in mapViewController.bostonMap.annotations {
+                            if (item as! Artwork).numID == self.selectedArtwork?.numID {
+                                mapViewController.bostonMap.removeAnnotation(item)
+                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            }
+                        }
+                    }
                     self.addressLabl.text = editAlert.textFields![0].text!
                 } else {
                     return
@@ -147,6 +202,16 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             })
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
+                    self.dataRef.child(String(self.selectedArtwork!.numID!)).child("Info").setValue(editAlert.textFields![0].text!)
+                    self.selectedArtwork!.info = editAlert.textFields![0].text!
+                    if let mapViewController = self.initialViewController {
+                        for item in mapViewController.bostonMap.annotations {
+                            if (item as! Artwork).numID == self.selectedArtwork?.numID {
+                                mapViewController.bostonMap.removeAnnotation(item)
+                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            }
+                        }
+                    }
                     self.artworkInfo.text = editAlert.textFields![0].text!
                 } else {
                     return
@@ -168,7 +233,6 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else {
             return
         }
-        statusBar.backgroundColor = nil
         setNeedsStatusBarAppearanceUpdate()
     }
 
@@ -222,15 +286,36 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
 
     func uploadToFirebase(data: Data) {
         let ref = Storage.storage().reference()
-        let imageRef = ref.child("image1")
-        imageRef.putData(data)
+        if let selectedImageUnwrapped = self.selectedArtwork {
+            if let num = selectedImageUnwrapped.numID {
+                let imageRef = ref.child(String(self.selectedArtwork!.numID!))
+                imageRef.putData(data)
+            }
+        }
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
         if let imageData = selectedImage.pngData() {
             uploadToFirebase(data: imageData)
+            self.selectedArtwork!.image = UIImage(data: imageData)
+            if let mapViewController = initialViewController {
+                if mapViewController.bostonMap.annotations.contains(where: { (MKAnnotation) -> Bool in
+                    (MKAnnotation as! Artwork).numID == self.selectedArtwork?.numID }) {
+                    for item in mapViewController.bostonMap.annotations {
+                        if (item as! Artwork).numID == self.selectedArtwork?.numID {
+                            mapViewController.bostonMap.removeAnnotation(item)
+                            self.selectedArtwork?.thumbnail = resizeImage(image: UIImage(data: imageData)!, newWidth: 35)
+                            mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                        }
+                    }
+                } else {
+                    self.selectedArtwork?.thumbnail = resizeImage(image: UIImage(data: imageData)!, newWidth: 35)
+                    mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                }
+            }
         }
+        self.addImageLabel.isHidden = true
         imageView.image = selectedImage
         dismiss(animated: true, completion: nil)
     }

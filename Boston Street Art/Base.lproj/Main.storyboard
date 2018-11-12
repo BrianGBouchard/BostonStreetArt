@@ -165,9 +165,21 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="f6A-Cc-xvo">
                                 <rect key="frame" x="177" y="177" width="20" height="20"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Add Image]" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0HC-HY-NUP">
+                                <rect key="frame" x="109" y="168" width="157" height="39"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="157" id="4BF-IZ-Sam"/>
+                                    <constraint firstAttribute="height" constant="39" id="Dh5-o2-jf5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS-Bold" family="Euphemia UCAS" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="0HC-HY-NUP" firstAttribute="centerX" secondItem="K0j-Yu-RvV" secondAttribute="centerX" id="6ls-Ic-Nfr"/>
                             <constraint firstItem="m2G-sV-GCe" firstAttribute="top" secondItem="cBJ-yt-SPv" secondAttribute="bottom" id="ANh-ts-2eZ"/>
                             <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="dv7-Bj-B3d" secondAttribute="trailing" constant="8" id="E9e-Qc-BW4"/>
                             <constraint firstItem="m2G-sV-GCe" firstAttribute="trailing" secondItem="NCo-dT-LhG" secondAttribute="trailing" constant="8" id="Oyi-bZ-ZWg"/>
@@ -181,6 +193,7 @@
                             <constraint firstItem="NCo-dT-LhG" firstAttribute="top" secondItem="K0j-Yu-RvV" secondAttribute="top" constant="20" id="a93-0O-fuH"/>
                             <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="K0j-Yu-RvV" secondAttribute="trailing" id="cuO-d8-MoR"/>
                             <constraint firstItem="cBJ-yt-SPv" firstAttribute="top" secondItem="dv7-Bj-B3d" secondAttribute="bottom" id="fIJ-48-3Qa"/>
+                            <constraint firstItem="0HC-HY-NUP" firstAttribute="centerY" secondItem="K0j-Yu-RvV" secondAttribute="centerY" id="k0c-8Q-8vE"/>
                             <constraint firstItem="dv7-Bj-B3d" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" constant="8" id="qnX-Zr-Eii"/>
                             <constraint firstItem="K0j-Yu-RvV" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" id="r6u-cB-orW"/>
                             <constraint firstItem="dv7-Bj-B3d" firstAttribute="top" secondItem="K0j-Yu-RvV" secondAttribute="bottom" constant="8" id="siJ-3a-Zet"/>
@@ -191,6 +204,7 @@
                     </view>
                     <connections>
                         <outlet property="activity" destination="f6A-Cc-xvo" id="joS-BC-zm8"/>
+                        <outlet property="addImageLabel" destination="0HC-HY-NUP" id="gh7-QN-RwP"/>
                         <outlet property="addressLabl" destination="m2G-sV-GCe" id="YcF-SA-hKM"/>
                         <outlet property="artistLabel" destination="cBJ-yt-SPv" id="Pho-sb-3W0"/>
                         <outlet property="artworkInfo" destination="YqK-Kl-D9i" id="Dil-96-dru"/>

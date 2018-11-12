@@ -22,7 +22,7 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     @IBOutlet var mapTab: UILabel!
     @IBOutlet var bostonMap: MKMapView!
 
-    var annotationList: Array<Artwork> = []
+    var artIDlist: Array<String> = []
 
     let dataRef = Database.database().reference().child("Artworks")
     let ref = Storage.storage().reference(withPath: "Images")
@@ -34,6 +34,9 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let urlString = "https://boston-street-art.firebaseio.com/Artworks.json?print=pretty"
+        let url = URL(string: urlString)!
+
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "EuphemiaUCAS-Bold", size: 10.0)!], for: UIControl.State.normal)
 
         guard let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else {
@@ -42,8 +45,6 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         var preferredStatusBarStyle: UIStatusBarStyle {
             return UIStatusBarStyle.lightContent
         }
-        statusBar.backgroundColor = UIColor.black
-        setNeedsStatusBarAppearanceUpdate()
 
 
         bostonMap.mapType = .mutedStandard
@@ -80,10 +81,51 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         let modicaWay = Artwork(coordinate: CLLocationCoordinate2D(latitude: 42.3650, longitude: -71.10))
         bostonMap.addAnnotation(modicaWay)
 
-        for item in annotationList {
-            bostonMap.addAnnotation(item)
+        do {
+            try getData()
+        } catch {
+            print(error.localizedDescription)
         }
+    }
 
+    func getData() throws {
+        let urlString = "https://boston-street-art.firebaseio.com/Artworks.json?print=pretty"
+        let url = URL(string: urlString)!
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                    for item in json {
+                        self.artIDlist.append(item.key)
+                        if let coordinates = (item.value as! [String: Any])["Coordinates"] {
+                            let latitude = (coordinates as! [String: Any])["Latitude"]
+                            let longitude = (coordinates as! [String: Any])["Longitude"]
+                            let art = Artwork(coordinate: CLLocationCoordinate2D(latitude: latitude as! Double, longitude: longitude as! Double))
+                            art.numID = UInt32(item.key)
+                            self.dataRef.child(item.key).observe(.value, with: { (snapshot) in
+                                art.artTitle = snapshot.childSnapshot(forPath: "Title").value as! String
+                                art.artist = snapshot.childSnapshot(forPath: "Artist").value as! String
+                                art.address = snapshot.childSnapshot(forPath: "Location").value as! String
+                                art.info = snapshot.childSnapshot(forPath: "Info").value as! String
+                            })
+                            DispatchQueue.main.async {
+                                Storage.storage().reference(withPath: item.key).getData(maxSize: 100000000000, completion: { (data, error) in
+                                    if let data = data {
+                                        art.image = UIImage(data: data)
+                                        art.thumbnail = resizeImage(image: UIImage(data: data)!, newWidth: 35)
+                                        self.bostonMap.addAnnotation(art)
+                                    } else {
+                                        self.bostonMap.addAnnotation(art)
+                                    }
+                                })
+                            }
+                        }
+                    }
+                } catch { print(error.localizedDescription) }
+            }
+        }
+        task.resume()
     }
 
     // MARK: Gesture Recognizers
@@ -94,11 +136,38 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         let alert = UIAlertController(title: nil, message: "Create marker at this location?", preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default) { (action) in
             let newAnnotation = Artwork(coordinate: coordinate)
-            
-            self.bostonMap.addAnnotation(newAnnotation)
-            self.annotationList.append(newAnnotation)
-            if let newView = self.mapView(self.bostonMap, viewFor: newAnnotation) {
-                self.mapView(self.bostonMap, didSelect: newView)
+            var newID = arc4random()
+            //CHECK FOR DUPLICATES
+            if self.artIDlist.contains(String(newID)) {
+                while self.artIDlist.contains(String(newID)) {
+                    newID = arc4random()
+                    if self.artIDlist.contains(String(newID)) == false {
+                        newAnnotation.numID = newID
+                    self.dataRef.child(String(newID)).child("Coordinates").child("Latitude").setValue(Double(coordinate.latitude))
+                    self.dataRef.child(String(newID)).child("Coordinates").child("Longitude").setValue(Double(coordinate.longitude))
+                        self.dataRef.child(String(newID)).child("Title").setValue(newAnnotation.artTitle)
+                        self.dataRef.child(String(newID)).child("Artist").setValue(newAnnotation.artist)
+                        self.dataRef.child(String(newID)).child("Location").setValue(newAnnotation.address)
+                        self.dataRef.child(String(newID)).child("Info").setValue(newAnnotation.info)
+
+                        self.bostonMap.addAnnotation(newAnnotation)
+                        if let newView = self.mapView(self.bostonMap, viewFor: newAnnotation) {
+                            self.mapView(self.bostonMap, didSelect: newView)
+                        }
+                    }
+                }
+            } else {
+                newAnnotation.numID = newID
+                self.dataRef.child(String(newID)).child("Coordinates").child("Latitude").setValue(Double(coordinate.latitude))
+                self.dataRef.child(String(newID)).child("Coordinates").child("Longitude").setValue(Double(coordinate.longitude))
+                self.bostonMap.addAnnotation(newAnnotation)
+                self.dataRef.child(String(newID)).child("Title").setValue(newAnnotation.artTitle)
+                self.dataRef.child(String(newID)).child("Artist").setValue(newAnnotation.artist)
+                self.dataRef.child(String(newID)).child("Location").setValue(newAnnotation.address)
+                self.dataRef.child(String(newID)).child("Info").setValue(newAnnotation.info)
+                if let newView = self.mapView(self.bostonMap, viewFor: newAnnotation) {
+                    self.mapView(self.bostonMap, didSelect: newView)
+                }
             }
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -130,6 +199,10 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
 
     @objc func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let newView = storyboard?.instantiateViewController(withIdentifier: "artwork") as! ArtworkViewController
+        newView.initialViewController = self
+        if let annotationForView = view.annotation as! Artwork? {
+            newView.selectedArtwork = annotationForView
+        }
         view.isSelected = false
         bostonMap.deselectAnnotation(view.annotation, animated: true)
         self.present(newView, animated: true, completion: nil)
@@ -139,10 +212,17 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = MKAnnotationView()
         annotationView.annotation = annotation
-        let icon = #imageLiteral(resourceName: "MapLogo")
-        annotationView.image = icon
+        if (annotation as! Artwork).thumbnail != nil {
+            annotationView.image = (annotation as! Artwork).thumbnail!
+        } else {
+            annotationView.image = UIImage(named: "NeedsImage")
+        }
         annotationView.isEnabled = true
         annotationView.canShowCallout = false
+        annotationView.layer.borderWidth = 1.0
+        annotationView.layer.borderColor = UIColor.black.cgColor
+        annotationView.layer.cornerRadius = 17.5
+        annotationView.clipsToBounds = true
         return annotationView
     }
 }
