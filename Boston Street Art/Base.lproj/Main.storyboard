@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dIG-50-phG">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Map-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="Boston_Street_Art" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eux-qa-5Nx">
+                                <rect key="frame" x="0.0" y="118" width="375" height="500"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="7Tc-Ue-dbb"/>
+                                </connections>
+                            </mapView>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZm-0Q-b6B">
+                                <rect key="frame" x="0.0" y="69" width="187.5" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="UbH-Tt-VaR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="highlightedColor" red="0.12941176470588234" green="0.5490196078431373" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Satellite" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVx-ap-sFM">
+                                <rect key="frame" x="187.5" y="69" width="187.5" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="DwC-Gz-bso"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Boston Street Art" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DzP-iV-bey">
+                                <rect key="frame" x="0.0" y="20" width="280" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="gcL-m1-lu3"/>
+                                    <constraint firstAttribute="width" constant="280" id="ruy-oy-ehg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="23"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a1Z-Le-B2T">
+                                <rect key="frame" x="280" y="20" width="95" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="oVx-ap-sFM" firstAttribute="top" secondItem="DzP-iV-bey" secondAttribute="bottom" id="0BN-RK-uee"/>
+                            <constraint firstItem="a1Z-Le-B2T" firstAttribute="leading" secondItem="DzP-iV-bey" secondAttribute="trailing" id="AWG-NF-GGx"/>
+                            <constraint firstItem="DzP-iV-bey" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="JSf-6O-eRV"/>
+                            <constraint firstItem="oVx-ap-sFM" firstAttribute="top" secondItem="a1Z-Le-B2T" secondAttribute="bottom" id="Jtu-Wa-5ZR"/>
+                            <constraint firstItem="QZm-0Q-b6B" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="M2O-Kg-Vcd"/>
+                            <constraint firstItem="QZm-0Q-b6B" firstAttribute="width" secondItem="oVx-ap-sFM" secondAttribute="width" id="Ofs-MC-0ik"/>
+                            <constraint firstItem="a1Z-Le-B2T" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="UwC-3y-2I2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="a1Z-Le-B2T" secondAttribute="trailing" id="YNr-Bu-Olv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="oVx-ap-sFM" secondAttribute="trailing" id="b5C-r1-3BN"/>
+                            <constraint firstItem="DzP-iV-bey" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="bUw-Zj-DUd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eux-qa-5Nx" secondAttribute="bottom" id="cnQ-4r-Uxg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eux-qa-5Nx" secondAttribute="trailing" id="gEZ-R0-3tE"/>
+                            <constraint firstItem="eux-qa-5Nx" firstAttribute="top" secondItem="QZm-0Q-b6B" secondAttribute="bottom" id="jxa-dU-gB5"/>
+                            <constraint firstItem="oVx-ap-sFM" firstAttribute="leading" secondItem="QZm-0Q-b6B" secondAttribute="trailing" id="sRx-pQ-h5U"/>
+                            <constraint firstItem="QZm-0Q-b6B" firstAttribute="top" secondItem="DzP-iV-bey" secondAttribute="bottom" id="vdd-rt-y6a"/>
+                            <constraint firstItem="eux-qa-5Nx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="w9M-9O-6PD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="MapLogo" selectedImage="MapLogo" id="UNm-10-g1P"/>
+                    <connections>
+                        <outlet property="bostonMap" destination="eux-qa-5Nx" id="tqu-jI-X9f"/>
+                        <outlet property="mapTab" destination="QZm-0Q-b6B" id="q1B-rz-0jZ"/>
+                        <outlet property="satelliteTab" destination="oVx-ap-sFM" id="Dt3-Dm-cLw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="429.60000000000002" y="-1139.2803598200901"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="3BH-UB-q8T">
+            <objects>
+                <tabBarController id="dIG-50-phG" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="foy-U2-OqN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="aGe-eb-mLh"/>
+                        <segue destination="GjI-Ki-hik" kind="relationship" relationship="viewControllers" id="qVi-Zo-UY2"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KXn-y0-6Pc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-521" y="-757"/>
+        </scene>
+        <!--Artwork View Controller-->
+        <scene sceneID="9zi-AD-deY">
+            <objects>
+                <viewController storyboardIdentifier="artwork" id="zRG-3z-jnd" customClass="ArtworkViewController" customModule="Boston_Street_Art" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NfO-cZ-uzZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K0j-Yu-RvV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="K0j-Yu-RvV" secondAttribute="height" multiplier="1:1" id="2q0-uN-Yn3"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Add Title]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dv7-Bj-B3d">
+                                <rect key="frame" x="8" y="383" width="359" height="45"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="s0K-CN-1A9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS-Bold" family="Euphemia UCAS" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Add Artist]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cBJ-yt-SPv">
+                                <rect key="frame" x="8" y="428" width="359" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="cwp-xV-8Mq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS-Bold" family="Euphemia UCAS" pointSize="18"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Add Address]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="m2G-sV-GCe">
+                                <rect key="frame" x="8" y="473" width="375" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="dAV-OW-xd4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="[Additional Information]" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YqK-Kl-D9i">
+                                <rect key="frame" x="4" y="526" width="363" height="133"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="EuphemiaUCAS" family="Euphemia UCAS" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="f6A-Cc-xvo">
+                                <rect key="frame" x="177" y="177" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="m2G-sV-GCe" firstAttribute="top" secondItem="cBJ-yt-SPv" secondAttribute="bottom" id="ANh-ts-2eZ"/>
+                            <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="dv7-Bj-B3d" secondAttribute="trailing" constant="8" id="E9e-Qc-BW4"/>
+                            <constraint firstItem="m2G-sV-GCe" firstAttribute="trailing" secondItem="NCo-dT-LhG" secondAttribute="trailing" constant="8" id="Oyi-bZ-ZWg"/>
+                            <constraint firstItem="cBJ-yt-SPv" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" constant="8" id="PWs-gS-q7u"/>
+                            <constraint firstItem="m2G-sV-GCe" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" constant="8" id="SLk-uP-OsE"/>
+                            <constraint firstItem="NCo-dT-LhG" firstAttribute="bottom" secondItem="YqK-Kl-D9i" secondAttribute="bottom" constant="8" id="TpU-Pw-Hig"/>
+                            <constraint firstItem="K0j-Yu-RvV" firstAttribute="top" secondItem="f6A-Cc-xvo" secondAttribute="bottom" constant="-197" id="UZS-7c-RPh"/>
+                            <constraint firstItem="K0j-Yu-RvV" firstAttribute="leading" secondItem="f6A-Cc-xvo" secondAttribute="trailing" constant="-197" id="W4f-vm-sdV"/>
+                            <constraint firstItem="YqK-Kl-D9i" firstAttribute="top" secondItem="m2G-sV-GCe" secondAttribute="bottom" constant="8" id="YCY-pT-IOo"/>
+                            <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="cBJ-yt-SPv" secondAttribute="trailing" constant="8" id="ZkJ-TW-2GG"/>
+                            <constraint firstItem="NCo-dT-LhG" firstAttribute="top" secondItem="K0j-Yu-RvV" secondAttribute="top" constant="20" id="a93-0O-fuH"/>
+                            <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="K0j-Yu-RvV" secondAttribute="trailing" id="cuO-d8-MoR"/>
+                            <constraint firstItem="cBJ-yt-SPv" firstAttribute="top" secondItem="dv7-Bj-B3d" secondAttribute="bottom" id="fIJ-48-3Qa"/>
+                            <constraint firstItem="dv7-Bj-B3d" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" constant="8" id="qnX-Zr-Eii"/>
+                            <constraint firstItem="K0j-Yu-RvV" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" id="r6u-cB-orW"/>
+                            <constraint firstItem="dv7-Bj-B3d" firstAttribute="top" secondItem="K0j-Yu-RvV" secondAttribute="bottom" constant="8" id="siJ-3a-Zet"/>
+                            <constraint firstItem="YqK-Kl-D9i" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" constant="4" id="tJY-Xy-r9E"/>
+                            <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="YqK-Kl-D9i" secondAttribute="trailing" constant="8" id="xDZ-H6-TF3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="NCo-dT-LhG"/>
+                    </view>
+                    <connections>
+                        <outlet property="activity" destination="f6A-Cc-xvo" id="joS-BC-zm8"/>
+                        <outlet property="addressLabl" destination="m2G-sV-GCe" id="YcF-SA-hKM"/>
+                        <outlet property="artistLabel" destination="cBJ-yt-SPv" id="Pho-sb-3W0"/>
+                        <outlet property="artworkInfo" destination="YqK-Kl-D9i" id="Dil-96-dru"/>
+                        <outlet property="imageView" destination="K0j-Yu-RvV" id="ae4-4E-WX6"/>
+                        <outlet property="titleLabel" destination="dv7-Bj-B3d" id="k0G-Ak-eDO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Pr-7K-zpn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-522.39999999999998" y="-8.5457271364317844"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="usl-m5-7Do">
+            <objects>
+                <viewController id="GjI-Ki-hik" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SfM-cd-zQh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="iJX-z7-BsG"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="ZaJ-3h-ba9"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pzK-Kn-enn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="411" y="-429"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="MapLogo" width="24" height="24"/>
+    </resources>
+</document>

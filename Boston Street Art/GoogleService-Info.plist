@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>90494938931-d0a9l0j5hi86i7s829k4p19knukeq8p4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.90494938931-d0a9l0j5hi86i7s829k4p19knukeq8p4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCjcfRQz48l5wwGLSmAf68CNC225Tst7kU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>90494938931</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.Nathan-Beaumont.Boston-Street-Art</string>
+	<key>PROJECT_ID</key>
+	<string>boston-street-art</string>
+	<key>STORAGE_BUCKET</key>
+	<string>boston-street-art.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:90494938931:ios:fee420fafde728d8</string>
+	<key>DATABASE_URL</key>
+	<string>https://boston-street-art.firebaseio.com</string>
+</dict>
+</plist>
