@@ -169,7 +169,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwn-Mf-dqT">
-                                <rect key="frame" x="295" y="613" width="64" height="36"/>
+                                <rect key="frame" x="293" y="613" width="64" height="36"/>
                                 <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
                                 <state key="normal" title="Favorite"/>
                                 <connections>
@@ -183,6 +183,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
                                 <state key="normal" title="Delete"/>
+                                <connections>
+                                    <action selector="deleteButtonPressedWithSender:" destination="zRG-3z-jnd" eventType="touchUpInside" id="oFz-nQ-Dt3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -192,7 +195,7 @@
                             <constraint firstItem="G3Q-SX-Thl" firstAttribute="top" secondItem="YqK-Kl-D9i" secondAttribute="bottom" constant="8" id="7IV-wM-PA3"/>
                             <constraint firstItem="m2G-sV-GCe" firstAttribute="top" secondItem="cBJ-yt-SPv" secondAttribute="bottom" id="ANh-ts-2eZ"/>
                             <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="dv7-Bj-B3d" secondAttribute="trailing" constant="8" id="E9e-Qc-BW4"/>
-                            <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="bwn-Mf-dqT" secondAttribute="trailing" constant="16" id="JUX-dK-hRl"/>
+                            <constraint firstItem="NCo-dT-LhG" firstAttribute="trailing" secondItem="bwn-Mf-dqT" secondAttribute="trailing" constant="18" id="JUX-dK-hRl"/>
                             <constraint firstItem="G3Q-SX-Thl" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" constant="16" id="MRJ-1c-Lbe"/>
                             <constraint firstItem="m2G-sV-GCe" firstAttribute="trailing" secondItem="NCo-dT-LhG" secondAttribute="trailing" constant="8" id="Oyi-bZ-ZWg"/>
                             <constraint firstItem="cBJ-yt-SPv" firstAttribute="leading" secondItem="NCo-dT-LhG" secondAttribute="leading" constant="8" id="PWs-gS-q7u"/>

@@ -365,7 +365,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             let userRef = Database.database().reference(withPath: "Users").child(currentUser)
             userRef.child("Favorites").child(String(currentArt)).observeSingleEvent(of: .value) { (snapshot) in
                 if snapshot.value as? Bool == true {
-                    let alert = UIAlertController(title: nil, message: "Remove this artwork from favorites?", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Edit Favorites List", message: "Remove this artwork from your favorites?", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Remove", style: .default, handler: { (action) in
                         userRef.child("Favorites").child(String(currentArt)).removeValue()
                     })
@@ -374,7 +374,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
                     alert.addAction(cancelAction)
                     self.present(alert, animated: true)
                 } else {
-                    let alert = UIAlertController(title: nil, message: "Add this artwork to favorites?", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Edit Favorites List", message: "Add this artwork to your favorites?", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Add", style: .default, handler: { (action) in
                         userRef.child("Favorites").child(String(currentArt)).setValue(true)
                     })
@@ -388,8 +388,31 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
     }
 
     @IBAction func deleteButtonPressed(sender: Any?) {
-        let alert = 
+        let alert = UIAlertController(title: "Delete this artwork from the map?", message: "This change will be permanent and cannot be undone.  These changes will affect all users, so please be courteous", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .default) { (action) in
+            self.dataRef.child(String(self.selectedArtwork!.numID!)).removeValue()
+            Storage.storage().reference().child(String(self.selectedArtwork!.numID!)).delete(completion: nil)
+            for item in self.initialViewController!.bostonMap.annotations {
+                if (item as! Artwork).numID == self.selectedArtwork?.numID {
+                    self.initialViewController?.bostonMap.removeAnnotation(item)
+                    self.dismiss(animated: true, completion: nil)
+                    Database.database().reference(withPath: "Users").observeSingleEvent(of: .value, with: { (snapshot) in
+                        for user in (snapshot.children.allObjects as! [DataSnapshot]) {
+                            Database.database().reference(withPath: "Users").child(user.key).child("Favorites").observeSingleEvent(of: .value, with: { (favoritesSnapshot) in
+                                for favorite in (favoritesSnapshot.children.allObjects as! [DataSnapshot]) {
+                                    if favorite.key == String(self.selectedArtwork!.numID!) {
+                                        Database.database().reference(withPath: "Users").child(user.key).child("Favorites").child(favorite.key).removeValue()
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        }
+        let cancelACtion = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelACtion)
+        self.present(alert, animated: true)
     }
-
-    
 }

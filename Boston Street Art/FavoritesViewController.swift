@@ -188,12 +188,19 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ArtworkCell
         cell.alpha = 0.0
+
         cell.vc = self
         let id = String(artList[indexPath.item].numID!)
         cell.idString = id
-        cell.titleLabel.text! = artList[indexPath.item].artTitle
+        if artList[indexPath.item].artTitle != "[Add Title]" {
+            cell.titleLabel.text! = artList[indexPath.item].artTitle
+        } else {
+            cell.titleLabel.text! = "[No Title]"
+        }
         if let image = artList[indexPath.item].image {
-            let thumbnail = resizeImage(image: artList[indexPath.item].image!, newWidth: cell.frame.width)
+            let background = UIImageView(image: resizeImage(image: #imageLiteral(resourceName: "NoImage"), newWidth: cell.frame.width+4))
+            cell.addSubview(background)
+            let thumbnail = resizeImage(image: image, newWidth: cell.frame.width)
             let imageView = UIImageView(image: thumbnail!)
             cell.addSubview(imageView)
             UIView.animate(withDuration: 0.3) {
@@ -201,6 +208,8 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
             }
             return cell
         } else {
+            let imageView = UIImageView(image: resizeImage(image: #imageLiteral(resourceName: "NoImage"), newWidth: cell.frame.width+3))
+            cell.addSubview(imageView)
             UIView.animate(withDuration: 0.3) {
                 cell.alpha = 1.0
                 self.activity.stopAnimating()

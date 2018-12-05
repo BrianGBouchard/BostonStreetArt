@@ -49,5 +49,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUseageDescription</key>
+	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
 </dict>
 </plist>

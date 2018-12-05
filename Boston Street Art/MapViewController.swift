@@ -13,8 +13,9 @@ import FirebaseStorage
 import AVKit
 import Photos
 import MapKit
+import CoreLocation
 
-class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate {
+class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
 
     // MARK: Properties
     
@@ -23,6 +24,7 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     @IBOutlet var bostonMap: MKMapView!
 
     var artIDlist: Array<String> = []
+    let locationManager = CLLocationManager()
 
     let dataRef = Database.database().reference().child("Artworks")
     let ref = Storage.storage().reference(withPath: "Images")
@@ -46,9 +48,14 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             return UIStatusBarStyle.lightContent
         }
 
-
         bostonMap.mapType = .mutedStandard
         createMap()
+
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        bostonMap.showsUserLocation = true
 
         let divider = UIView(frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: 1))
         divider.backgroundColor = UIColor.lightGray
@@ -77,6 +84,9 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         let mapPress = UITapGestureRecognizer(target: self, action:#selector(handleMapPress(gestureRecognizer:)))
         mapPress.delegate = self
         mapTab.addGestureRecognizer(mapPress)
+
+
+        bostonMap.showsUserLocation = true
 
         do {
             try getData()
@@ -246,11 +256,16 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
         let annotationView = MKAnnotationView()
         annotationView.alpha = 0.0
         annotationView.annotation = annotation
-        if (annotation as! Artwork).thumbnail != nil {
-            annotationView.image = (annotation as! Artwork).thumbnail!
+        if  let annot = annotation as? Artwork {
+            if let annotationThumbnail = annot.thumbnail  {
+                annotationView.image = annotationThumbnail
+            }
         } else {
             annotationView.image = UIImage(named: "NeedsImage")
         }
