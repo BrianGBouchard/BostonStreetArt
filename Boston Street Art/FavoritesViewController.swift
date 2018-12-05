@@ -38,6 +38,9 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
             let favoritesRef = Database.database().reference(withPath: "Users").child(currentUser).child("Favorites")
             favoritesRef.observeSingleEvent(of: .value) { (snapshot) in
                 let favoritesList = snapshot.children.allObjects as! [DataSnapshot]
+                if favoritesList.count == 0 {
+                    self.perform(#selector(self.stopActInd), with: nil, afterDelay: 0.3)
+                }
                 for item in favoritesList {
                     let itemID = item.key
                     self.dataRef.child(itemID).observeSingleEvent(of: .value, with: { (itemSnapshot) in
