@@ -22,7 +22,6 @@ class ArtworkCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.alpha = 0.0
         if let viewController = vc {
             viewController.activity.startAnimating()
         }

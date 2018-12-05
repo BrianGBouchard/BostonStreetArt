@@ -26,6 +26,7 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        activity.startAnimating()
         super.viewDidAppear(true)
         artList = []
         collection.isHidden = false
@@ -88,8 +89,9 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ArtworkCell
-        cell.alpha = 0.0
-
+        UIView.animate(withDuration: 0.3) {
+            cell.alpha = 0.0
+        }
         cell.vc = self
         let id = String(artList[indexPath.item].numID!)
         cell.idString = id
