@@ -18,6 +18,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
 
     var selectedArtwork: Artwork?
     var initialViewController: MapViewController?
+    var favoritesViewController: FavoritesViewController?
     let dataRef = Database.database().reference(withPath: "Artworks")
 
     let picker = UIImagePickerController()
@@ -80,12 +81,26 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
                     self.dataRef.child(String(self.selectedArtwork!.numID!)).child("Title").setValue(editAlert.textFields![0].text!)
+                    if let favoritesVC = self.favoritesViewController {
+                        favoritesVC.needsUpdating = true
+                    }
+                    if let tabVC = self.initialViewController?.tabBarController {
+                        if let viewControllers = tabVC.viewControllers {
+                            if let favVC = viewControllers[1] as? FavoritesViewController {
+                                favVC.needsUpdating = true
+                            }
+                        }
+                    }
                     self.selectedArtwork?.artTitle = editAlert.textFields![0].text!
                     if let mapViewController = self.initialViewController {
                         for item in mapViewController.bostonMap.annotations {
-                            if (item as! Artwork).numID == self.selectedArtwork?.numID {
-                                mapViewController.bostonMap.removeAnnotation(item)
-                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            if let artItem = item as? Artwork {
+                                if let artItemID = artItem.numID {
+                                    if artItemID == self.selectedArtwork?.numID {
+                                        mapViewController.bostonMap.removeAnnotation(item)
+                                        mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                                    }
+                                }
                             }
                         }
                     }
@@ -119,12 +134,26 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
                     self.dataRef.child(String(self.selectedArtwork!.numID!)).child("Artist").setValue(editAlert.textFields![0].text!)
+                    if let favoritesVC = self.favoritesViewController {
+                        favoritesVC.needsUpdating = true
+                    }
+                    if let tabVC = self.initialViewController?.tabBarController {
+                        if let viewControllers = tabVC.viewControllers {
+                            if let favVC = viewControllers[1] as? FavoritesViewController {
+                                favVC.needsUpdating = true
+                            }
+                        }
+                    }
                     self.selectedArtwork!.artist = editAlert.textFields![0].text!
                     if let mapViewController = self.initialViewController {
                         for item in mapViewController.bostonMap.annotations {
-                            if (item as! Artwork).numID == self.selectedArtwork?.numID {
-                                mapViewController.bostonMap.removeAnnotation(item)
-                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            if let artItem = item as? Artwork {
+                                if let artItemID = artItem.numID {
+                                    if artItemID == self.selectedArtwork?.numID {
+                                        mapViewController.bostonMap.removeAnnotation(item)
+                                        mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                                    }
+                                }
                             }
                         }
                     }
@@ -159,12 +188,26 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
                     self.dataRef.child(String(self.selectedArtwork!.numID!)).child("Location").setValue(editAlert.textFields![0].text!)
+                    if let favoritesVC = self.favoritesViewController {
+                        favoritesVC.needsUpdating = true
+                    }
+                    if let tabVC = self.initialViewController?.tabBarController {
+                        if let viewControllers = tabVC.viewControllers {
+                            if let favVC = viewControllers[1] as? FavoritesViewController {
+                                favVC.needsUpdating = true
+                            }
+                        }
+                    }
                     self.selectedArtwork!.address = editAlert.textFields![0].text!
                     if let mapViewController = self.initialViewController {
                         for item in mapViewController.bostonMap.annotations {
-                            if (item as! Artwork).numID == self.selectedArtwork?.numID {
-                                mapViewController.bostonMap.removeAnnotation(item)
-                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            if let artItem = item as? Artwork {
+                                if let artItemID = artItem.numID {
+                                    if artItemID == self.selectedArtwork?.numID {
+                                        mapViewController.bostonMap.removeAnnotation(item)
+                                        mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                                    }
+                                }
                             }
                         }
                     }
@@ -198,12 +241,26 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
                     self.dataRef.child(String(self.selectedArtwork!.numID!)).child("Info").setValue(editAlert.textFields![0].text!)
+                    if let favoritesVC = self.favoritesViewController {
+                        favoritesVC.needsUpdating = true
+                    }
+                    if let tabVC = self.initialViewController?.tabBarController {
+                        if let viewControllers = tabVC.viewControllers {
+                            if let favVC = viewControllers[1] as? FavoritesViewController {
+                                favVC.needsUpdating = true
+                            }
+                        }
+                    }
                     self.selectedArtwork!.info = editAlert.textFields![0].text!
                     if let mapViewController = self.initialViewController {
                         for item in mapViewController.bostonMap.annotations {
-                            if (item as! Artwork).numID == self.selectedArtwork?.numID {
-                                mapViewController.bostonMap.removeAnnotation(item)
-                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            if let artItem = item as? Artwork {
+                                if let artItemID = artItem.numID {
+                                    if artItemID == self.selectedArtwork?.numID {
+                                        mapViewController.bostonMap.removeAnnotation(item)
+                                        mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                                    }
+                                }
                             }
                         }
                     }
@@ -290,18 +347,32 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let favoritesVC = self.favoritesViewController {
+            favoritesVC.needsUpdating = true
+        }
+        if let tabVC = self.initialViewController?.tabBarController {
+            if let viewControllers = tabVC.viewControllers {
+                if let favVC = viewControllers[1] as? FavoritesViewController {
+                    favVC.needsUpdating = true
+                }
+            }
+        }
         let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
         if let imageData = selectedImage.pngData() {
             self.selectedArtwork!.image = UIImage(data: imageData)
             uploadToFirebase(data: imageData)
             if let mapViewController = initialViewController {
                 if mapViewController.bostonMap.annotations.contains(where: { (MKAnnotation) -> Bool in
-                    (MKAnnotation as! Artwork).numID == self.selectedArtwork?.numID }) {
+                    (MKAnnotation as? Artwork)!.numID == self.selectedArtwork?.numID }) {
                     for item in mapViewController.bostonMap.annotations {
-                        if (item as! Artwork).numID == self.selectedArtwork?.numID {
-                            mapViewController.bostonMap.removeAnnotation(item)
-                            self.selectedArtwork?.thumbnail = resizeImage(image: UIImage(data: imageData)!, newWidth: 35)
-                            mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                        if let artItem = item as? Artwork {
+                            if let artItemID = artItem.numID {
+                                if artItemID == selectedArtwork!.numID! {
+                                    mapViewController.bostonMap.removeAnnotation(item)
+                                    self.selectedArtwork?.thumbnail = resizeImage(image: UIImage(data: imageData)!, newWidth: 35)
+                                    mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                                }
+                            }
                         }
                     }
                 } else {
@@ -347,6 +418,16 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
                     let alert = UIAlertController(title: "Edit Favorites List", message: "Remove this artwork from your favorites?", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Remove", style: .default, handler: { (action) in
                         userRef.child("Favorites").child(String(currentArt)).removeValue()
+                        if let favoritesVC = self.favoritesViewController {
+                            favoritesVC.needsUpdating = true
+                        }
+                        if let tabVC = self.initialViewController?.tabBarController {
+                            if let viewControllers = tabVC.viewControllers {
+                                if let favVC = viewControllers[1] as? FavoritesViewController {
+                                    favVC.needsUpdating = true
+                                }
+                            }
+                        }
                     })
                     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                     alert.addAction(action)
@@ -356,6 +437,16 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
                     let alert = UIAlertController(title: "Edit Favorites List", message: "Add this artwork to your favorites?", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Add", style: .default, handler: { (action) in
                         userRef.child("Favorites").child(String(currentArt)).setValue(true)
+                        if let favoritesVC = self.favoritesViewController {
+                            favoritesVC.needsUpdating = true
+                        }
+                        if let tabVC = self.initialViewController?.tabBarController {
+                            if let viewControllers = tabVC.viewControllers {
+                                if let favVC = viewControllers[1] as? FavoritesViewController {
+                                    favVC.needsUpdating = true
+                                }
+                            }
+                        }
                     })
                     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                     alert.addAction(action)
@@ -367,6 +458,16 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
     }
 
     @IBAction func deleteButtonPressed(sender: Any?) {
+        if let favoritesVC = self.favoritesViewController {
+            favoritesVC.needsUpdating = true
+        }
+        if let tabVC = self.initialViewController?.tabBarController {
+            if let viewControllers = tabVC.viewControllers {
+                if let favVC = viewControllers[1] as? FavoritesViewController {
+                    favVC.needsUpdating = true
+                }
+            }
+        }
         let alert = UIAlertController(title: "Delete this artwork from the map?", message: "This change will be permanent and cannot be undone.  These changes will affect all users, so please be courteous", preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: "Delete", style: .default) { (action) in
             self.dataRef.child(String(self.selectedArtwork!.numID!)).removeValue()

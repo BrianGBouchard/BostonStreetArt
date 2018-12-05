@@ -19,6 +19,7 @@
 		A85D94A421962675008122B5 /* Artwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85D94A321962675008122B5 /* Artwork.swift */; };
 		A85D94C7219A15AD008122B5 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85D94C6219A15AC008122B5 /* FavoritesViewController.swift */; };
 		A85D94C9219A1752008122B5 /* ArtworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85D94C8219A1752008122B5 /* ArtworkCell.swift */; };
+		A86374EE21B86479007C6CBC /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86374ED21B86479007C6CBC /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		A85D94A321962675008122B5 /* Artwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artwork.swift; sourceTree = "<group>"; };
 		A85D94C6219A15AC008122B5 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		A85D94C8219A1752008122B5 /* ArtworkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkCell.swift; sourceTree = "<group>"; };
+		A86374ED21B86479007C6CBC /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		F3CF20D7AF76ECE592DE78E3 /* Pods_Boston_Street_Art.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Boston_Street_Art.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -87,6 +89,7 @@
 				A85D94C8219A1752008122B5 /* ArtworkCell.swift */,
 				A85D94A321962675008122B5 /* Artwork.swift */,
 				A85D948E21934B41008122B5 /* Main.storyboard */,
+				A86374ED21B86479007C6CBC /* InfoViewController.swift */,
 				A85D94A121936F4F008122B5 /* ArtworkViewController.swift */,
 				A85D949421934B42008122B5 /* Assets.xcassets */,
 				A85D949621934B42008122B5 /* LaunchScreen.storyboard */,
@@ -241,6 +244,7 @@
 				A85D94A421962675008122B5 /* Artwork.swift in Sources */,
 				A85D94A221936F4F008122B5 /* ArtworkViewController.swift in Sources */,
 				A85D94C7219A15AD008122B5 /* FavoritesViewController.swift in Sources */,
+				A86374EE21B86479007C6CBC /* InfoViewController.swift in Sources */,
 				A85D948B21934B41008122B5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
