@@ -25,8 +25,12 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
         activity.hidesWhenStopped = true
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         activity.startAnimating()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         artList = []
         collection.isHidden = false
