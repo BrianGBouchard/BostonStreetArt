@@ -92,7 +92,11 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         let edit = UIAlertAction(title: "Edit", style: .default) { (action) in
             let editAlert = UIAlertController(title: nil, message: "Enter a title", preferredStyle: .alert)
             editAlert.addTextField(configurationHandler: { (textfield) in
-                textfield.text! = self.titleLabel.text!
+                if self.titleLabel.text == "[Add Title]" {
+                    textfield.text! = ""
+                } else {
+                    textfield.text! = self.titleLabel.text!
+                }
             })
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
@@ -127,7 +131,11 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         let edit = UIAlertAction(title: "Edit", style: .default) { (action) in
             let editAlert = UIAlertController(title: nil, message: "Enter artist name", preferredStyle: .alert)
             editAlert.addTextField(configurationHandler: { (textfield) in
-                textfield.text! = self.artistLabel.text!
+                if self.artistLabel.text == "[Add Artist]" {
+                    textfield.text! = ""
+                } else {
+                    textfield.text! = self.artistLabel.text!
+                }
             })
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
@@ -163,7 +171,11 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         let edit = UIAlertAction(title: "Edit", style: .default) { (action) in
             let editAlert = UIAlertController(title: nil, message: "Enter address/location", preferredStyle: .alert)
             editAlert.addTextField(configurationHandler: { (textfield) in
-                textfield.text! = self.addressLabl.text!
+                if self.addressLabl.text == "[Add Address]" {
+                    textfield.text! = ""
+                } else {
+                    textfield.text! = self.addressLabl.text!
+                }
             })
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
@@ -198,7 +210,11 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         let edit = UIAlertAction(title: "Edit", style: .default) { (action) in
             let editAlert = UIAlertController(title: nil, message: "Enter info", preferredStyle: .alert)
             editAlert.addTextField(configurationHandler: { (textfield) in
-                textfield.text! = self.artworkInfo.text!
+                if self.artworkInfo.text == "[Add Information]" {
+                    textfield.text! = ""
+                } else {
+                    textfield.text! = self.artworkInfo.text!
+                }
             })
             let editOK = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
                 if editAlert.textFields![0].text != nil && editAlert.textFields![0].text != "" {
@@ -288,7 +304,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         let ref = Storage.storage().reference()
         if let selectedImageUnwrapped = self.selectedArtwork {
             if let num = selectedImageUnwrapped.numID {
-                let imageRef = ref.child(String(self.selectedArtwork!.numID!))
+                let imageRef = ref.child(String(num))
                 imageRef.putData(data)
             }
         }
@@ -297,8 +313,8 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
         if let imageData = selectedImage.pngData() {
-            uploadToFirebase(data: imageData)
             self.selectedArtwork!.image = UIImage(data: imageData)
+            uploadToFirebase(data: imageData)
             if let mapViewController = initialViewController {
                 if mapViewController.bostonMap.annotations.contains(where: { (MKAnnotation) -> Bool in
                     (MKAnnotation as! Artwork).numID == self.selectedArtwork?.numID }) {
@@ -326,10 +342,12 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             let editAlert = UIAlertController(title: "Select Image", message: nil, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let galleryAction = UIAlertAction(title: "Library", style: .default) { (action) in
-                self.openGallary()
+                //self.openGallary()
+                self.getGallaryPermission()
             }
             let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
-                self.openCamera()
+                //self.openCamera()
+                self.getCameraPermission()
             }
             editAlert.addAction(cancelAction)
             editAlert.addAction(galleryAction)
@@ -340,6 +358,37 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         alert.addAction(editAction)
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
+    }
+
+    @IBAction func button(sender: Any?) {
+        if let currentUser = Auth.auth().currentUser?.uid, let currentArt = self.selectedArtwork?.numID {
+            let userRef = Database.database().reference(withPath: "Users").child(currentUser)
+            userRef.child("Favorites").child(String(currentArt)).observeSingleEvent(of: .value) { (snapshot) in
+                if snapshot.value as? Bool == true {
+                    let alert = UIAlertController(title: nil, message: "Remove this artwork from favorites?", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Remove", style: .default, handler: { (action) in
+                        userRef.child("Favorites").child(String(currentArt)).removeValue()
+                    })
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                    alert.addAction(action)
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: nil, message: "Add this artwork to favorites?", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Add", style: .default, handler: { (action) in
+                        userRef.child("Favorites").child(String(currentArt)).setValue(true)
+                    })
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                    alert.addAction(action)
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true)
+                }
+            }
+        }
+    }
+
+    @IBAction func deleteButtonPressed(sender: Any?) {
+        let alert = 
     }
 
     

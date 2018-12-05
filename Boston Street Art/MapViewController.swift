@@ -54,11 +54,11 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         divider.backgroundColor = UIColor.lightGray
         divider.alpha = 1.0
         //view.addSubview(divider)
-        let divider2 = UIView(frame: CGRect(x: 0, y: 69, width: self.view.frame.width, height: 1))
+        let divider2 = UIView(frame: CGRect(x: 0, y: statusBar.frame.height+49, width: self.view.frame.width, height: 1))
         divider2.backgroundColor = UIColor.lightGray
         divider2.alpha = 1.0
-        view.addSubview(divider2)
-        let divider3 = UIView(frame: CGRect(x: 0, y: 118, width: self.view.frame.width, height: 1))
+        //view.addSubview(divider2)
+        let divider3 = UIView(frame: CGRect(x: 0, y: statusBar.frame.height+98, width: self.view.frame.width, height: 1))
         divider3.backgroundColor = UIColor.lightGray
         divider3.alpha = 1.0
         view.addSubview(divider3)
@@ -78,9 +78,6 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         mapPress.delegate = self
         mapTab.addGestureRecognizer(mapPress)
 
-        let modicaWay = Artwork(coordinate: CLLocationCoordinate2D(latitude: 42.3650, longitude: -71.10))
-        bostonMap.addAnnotation(modicaWay)
-
         do {
             try getData()
         } catch {
@@ -89,10 +86,42 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
 
     func getData() throws {
-        let urlString = "https://boston-street-art.firebaseio.com/Artworks.json?print=pretty"
+        /*let urlString = "https://boston-street-art.firebaseio.com/Artworks.json?print=pretty"
         let url = URL(string: urlString)!
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+        let request = URLRequest(url: url)*/
+
+        dataRef.observeSingleEvent(of: .value) { (snapshot) in
+            let children = snapshot.children.allObjects as! [DataSnapshot]
+            for child in children {
+                let artID = child.key
+                let artCoordinatesLat = child.childSnapshot(forPath: "Coordinates").childSnapshot(forPath: "Latitude").value as? Double
+                let artCoordinatesLong = child.childSnapshot(forPath: "Coordinates").childSnapshot(forPath: "Longitude").value as? Double
+                let artTitle = child.childSnapshot(forPath: "Title").value as? String
+                let artArtist = child.childSnapshot(forPath: "Artist").value as? String
+                let artLocation = child.childSnapshot(forPath: "Location").value as? String
+                let artInfo = child.childSnapshot(forPath: "Info").value as? String
+                let newArt = Artwork(coordinate: CLLocationCoordinate2D(latitude: artCoordinatesLat!, longitude: artCoordinatesLong!))
+                newArt.address = artLocation!
+                newArt.artTitle = artTitle!
+                newArt.artist = artArtist!
+                newArt.info = artInfo!
+                newArt.numID = UInt32(artID)
+                Storage.storage().reference(withPath: artID).getData(maxSize: 1000000000, completion: { (data, error) in
+                    if let imageData = data {
+                        newArt.image = UIImage(data: imageData)
+                        newArt.thumbnail = resizeImage(image: UIImage(data: imageData)!, newWidth: 35)
+                        self.bostonMap.addAnnotation(newArt)
+                        self.bostonMap.reloadInputViews()
+                    } else {
+                        self.bostonMap.addAnnotation(newArt)
+                        self.bostonMap.reloadInputViews()
+                    }
+                })
+
+            }
+        }
+
+        /*let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let data = data {
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
@@ -125,7 +154,14 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                 } catch { print(error.localizedDescription) }
             }
         }
+        let group = DispatchGroup()
+        group.enter()
         task.resume()
+        group.leave()
+        group.notify(queue: .main) {
+            self.bostonMap.reloadInputViews()
+        }
+        */
     }
 
     // MARK: Gesture Recognizers
@@ -211,6 +247,7 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = MKAnnotationView()
+        annotationView.alpha = 0.0
         annotationView.annotation = annotation
         if (annotation as! Artwork).thumbnail != nil {
             annotationView.image = (annotation as! Artwork).thumbnail!
@@ -223,6 +260,9 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         annotationView.layer.borderColor = UIColor.black.cgColor
         annotationView.layer.cornerRadius = 17.5
         annotationView.clipsToBounds = true
+        UIView.animate(withDuration: 0.5) {
+            annotationView.alpha = 1.0
+        }
         return annotationView
     }
 }
