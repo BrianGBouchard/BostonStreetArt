@@ -1,11 +1,3 @@
-//
-//  FavoritesViewController.swift
-//  Boston Street Art
-//
-//  Created by Brian Bouchard on 11/12/18.
-//  Copyright © 2018 Brian Bouchard. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import MapKit
@@ -21,49 +13,12 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
 
     var favoritesIDList: Array<SavedArtwork> = []
     var artList: Array<Artwork> = []
-    //var favoritesList: Array<Artwork> = []
     let storageRef = Storage.storage().reference()
     let dataRef = Database.database().reference(withPath: "Artworks")
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        /*let request: NSFetchRequest<SavedArtwork> = SavedArtwork.fetchRequest()
-        do {
-            favoritesIDList = []
-            favoritesIDList = try context.fetch(request)
-            for item in favoritesIDList {
-                dataRef.child(item.idNumberString!).observe(.value) { (snapshot) in
-                    var newArt = Artwork(coordinate: CLLocationCoordinate2D(latitude: snapshot.childSnapshot(forPath: "Coordinates/Latitude").value as! Double, longitude: snapshot.childSnapshot(forPath: "Coordinates/Longitude").value as! Double))
-                    newArt.artTitle = snapshot.childSnapshot(forPath: "Title").value as! String
-                    newArt.artist = snapshot.childSnapshot(forPath: "Artist").value as! String
-                    newArt.address = snapshot.childSnapshot(forPath: "Location").value as! String
-                    newArt.info = snapshot.childSnapshot(forPath: "Info").value as! String
-                    newArt.numID = UInt32(item.idNumberString!)
-                    self.storageRef.child(item.idNumberString!).getData(maxSize: 100000000, completion: { (data, error) in
-                        if let data = data {
-                            newArt.image = UIImage(data: data)
-                            self.favoritesList.append(newArt)
-                            self.collection.reloadData()
-                        } else {
-                            self.favoritesList.append(newArt)
-                            self.collection.reloadData()
-                        }
-                    })
-
-                }
-
-            }
-        } catch { print("error, context failed to load") }
-
-
-
-
-        let ann1 = Artwork(coordinate: CLLocationCoordinate2D(latitude: 42.3471, longitude: -71.0825))
-        ann1.image = UIImage(named: "NeedsImage")
-        collection.reloadData()*/
-
         let divider = UIView(frame: CGRect(x: 0, y: self.view.frame.height - 1 - tabBarController!.tabBar.frame.height, width: self.view.frame.width, height: 1))
         divider.backgroundColor = UIColor.lightGray
         self.view.addSubview(divider)
@@ -108,42 +63,15 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
                 }
             }
         }
-
-        /*let request: NSFetchRequest<SavedArtwork> = SavedArtwork.fetchRequest()
-        do {
-            favoritesIDList = []
-            favoritesIDList = try context.fetch(request)
-            for item in favoritesIDList {
-                dataRef.child(item.idNumberString!).observe(.value) { (snapshot) in
-                    var newArt = Artwork(coordinate: CLLocationCoordinate2D(latitude: snapshot.childSnapshot(forPath: "Coordinates/Latitude").value as! Double, longitude: snapshot.childSnapshot(forPath: "Coordinates/Longitude").value as! Double))
-                    newArt.artTitle = snapshot.childSnapshot(forPath: "Title").value as! String
-                    newArt.artist = snapshot.childSnapshot(forPath: "Artist").value as! String
-                    newArt.address = snapshot.childSnapshot(forPath: "Location").value as! String
-                    newArt.info = snapshot.childSnapshot(forPath: "Info").value as! String
-                    newArt.numID = UInt32(item.idNumberString!)
-                    self.storageRef.child(item.idNumberString!).getData(maxSize: 100000000, completion: { (data, error) in
-                        if let data = data {
-                            newArt.image = UIImage(data: data)
-                            self.favoritesList.append(newArt)
-                            self.collection.reloadData()
-                        } else {
-                            self.favoritesList.append(newArt)
-                            self.collection.reloadData()
-                        }
-                    })
-
-                }
-
-            }
-        } catch { print("error, context failed to load") }
-        */
-
-
-
-
-        let ann1 = Artwork(coordinate: CLLocationCoordinate2D(latitude: 42.3471, longitude: -71.0825))
+        /*let ann1 = Artwork(coordinate: CLLocationCoordinate2D(latitude: 42.3471, longitude: -71.0825))
         ann1.image = UIImage(named: "NeedsImage")
-        collection.reloadData()
+        collection.reloadData()*/
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        for item in collection.subviews {
+            item.alpha = 0.0
+        }
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -152,7 +80,6 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            //return favoritesList.count
             return artList.count
         } else {
             return 3
@@ -160,32 +87,6 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        /*let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ArtworkCell
-        cell.idString = favoritesIDList[indexPath.item].idNumberString
-        for item in favoritesList {
-            if String(item.numID!) == cell.idString! {
-                let currentAnnotation = item
-                cell.titleLabel.text! = currentAnnotation.artTitle
-                //let label = UILabel(frame: CGRect(x: 0, y: 113, width: cell.frame.width, height: 40))
-                //label.backgroundColor = UIColor.black
-                //label.textColor = UIColor.white
-                //label.text = item.artTitle
-                if let currentAnnotationImage = currentAnnotation.image {
-                    let thumbnail = resizeImage(image: currentAnnotationImage, newWidth: cell.frame.width)
-                    let imageView = UIImageView(image: thumbnail)
-                    cell.addSubview(imageView)
-                    //cell.addSubview(label)
-                    return cell
-                } else {
-                    let currentImage = UIImage(named: "NeedsImage")
-                    //cell.addSubview(label)
-                    cell.backgroundView = UIImageView(image: currentImage!)
-                }
-            }
-        }
-        return cell
-        */
-
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ArtworkCell
         cell.alpha = 0.0
 

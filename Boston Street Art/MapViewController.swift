@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  Boston Street Art
-//
-//  Created by Brian Bouchard on 11/7/18.
-//  Copyright © 2018 Brian Bouchard. All rights reserved.
-//
-
 import UIKit
 import Firebase
 import FirebaseDatabase
@@ -96,10 +88,6 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
 
     func getData() throws {
-        /*let urlString = "https://boston-street-art.firebaseio.com/Artworks.json?print=pretty"
-        let url = URL(string: urlString)!
-        let request = URLRequest(url: url)*/
-
         dataRef.observeSingleEvent(of: .value) { (snapshot) in
             let children = snapshot.children.allObjects as! [DataSnapshot]
             for child in children {
@@ -127,51 +115,8 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                         self.bostonMap.reloadInputViews()
                     }
                 })
-
             }
         }
-
-        /*let task = URLSession.shared.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-            if let data = data {
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                    for item in json {
-                        self.artIDlist.append(item.key)
-                        if let coordinates = (item.value as! [String: Any])["Coordinates"] {
-                            let latitude = (coordinates as! [String: Any])["Latitude"]
-                            let longitude = (coordinates as! [String: Any])["Longitude"]
-                            let art = Artwork(coordinate: CLLocationCoordinate2D(latitude: latitude as! Double, longitude: longitude as! Double))
-                            art.numID = UInt32(item.key)
-                            self.dataRef.child(item.key).observe(.value, with: { (snapshot) in
-                                art.artTitle = snapshot.childSnapshot(forPath: "Title").value as! String
-                                art.artist = snapshot.childSnapshot(forPath: "Artist").value as! String
-                                art.address = snapshot.childSnapshot(forPath: "Location").value as! String
-                                art.info = snapshot.childSnapshot(forPath: "Info").value as! String
-                            })
-                            DispatchQueue.main.async {
-                                Storage.storage().reference(withPath: item.key).getData(maxSize: 100000000000, completion: { (data, error) in
-                                    if let data = data {
-                                        art.image = UIImage(data: data)
-                                        art.thumbnail = resizeImage(image: UIImage(data: data)!, newWidth: 35)
-                                        self.bostonMap.addAnnotation(art)
-                                    } else {
-                                        self.bostonMap.addAnnotation(art)
-                                    }
-                                })
-                            }
-                        }
-                    }
-                } catch { print(error.localizedDescription) }
-            }
-        }
-        let group = DispatchGroup()
-        group.enter()
-        task.resume()
-        group.leave()
-        group.notify(queue: .main) {
-            self.bostonMap.reloadInputViews()
-        }
-        */
     }
 
     // MARK: Gesture Recognizers
@@ -257,8 +202,10 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
+
             return nil
         }
+
         let annotationView = MKAnnotationView()
         annotationView.alpha = 0.0
         annotationView.annotation = annotation
@@ -266,9 +213,13 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             if let annotationThumbnail = annot.thumbnail  {
                 annotationView.image = annotationThumbnail
             }
+            else {
+                annotationView.image = UIImage(named: "NeedsImage")
+            }
         } else {
             annotationView.image = UIImage(named: "NeedsImage")
         }
+
         annotationView.isEnabled = true
         annotationView.canShowCallout = false
         annotationView.layer.borderWidth = 1.0
@@ -278,6 +229,7 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         UIView.animate(withDuration: 0.5) {
             annotationView.alpha = 1.0
         }
+        
         return annotationView
     }
 }

@@ -1,11 +1,3 @@
-//
-//  imageviewcontroller.swift
-//  Boston Street Art
-//
-//  Created by Brian Bouchard on 11/7/18.
-//  Copyright © 2018 Brian Bouchard. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import FirebaseStorage
@@ -13,7 +5,6 @@ import Firebase
 import FirebaseDatabase
 import AVKit
 import Photos
-
 
 class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -42,18 +33,6 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             self.artistLabel.text! = artUnwrapped.artist
             self.addressLabl.text! = artUnwrapped.address
             self.artworkInfo.text = artUnwrapped.info
-            /*if let num = artUnwrapped.numID {
-                let imageref = Storage.storage().reference(withPath: "\(num)")
-                imageref.getData(maxSize: 100000000) { (imagedata, error) in
-                    if let data = imagedata {
-                        self.imageView.image = UIImage(data: data)
-                        self.activity.stopAnimating()
-                    } else {
-                        self.addImageLabel.isHidden = false
-                        self.activity.stopAnimating()
-                    }
-                }
-            }*/
             if let pic = self.selectedArtwork!.image {
                 self.imageView.image = pic
                 self.activity.stopAnimating()
@@ -393,20 +372,22 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
             self.dataRef.child(String(self.selectedArtwork!.numID!)).removeValue()
             Storage.storage().reference().child(String(self.selectedArtwork!.numID!)).delete(completion: nil)
             for item in self.initialViewController!.bostonMap.annotations {
-                if (item as! Artwork).numID == self.selectedArtwork?.numID {
-                    self.initialViewController?.bostonMap.removeAnnotation(item)
-                    self.dismiss(animated: true, completion: nil)
-                    Database.database().reference(withPath: "Users").observeSingleEvent(of: .value, with: { (snapshot) in
-                        for user in (snapshot.children.allObjects as! [DataSnapshot]) {
-                            Database.database().reference(withPath: "Users").child(user.key).child("Favorites").observeSingleEvent(of: .value, with: { (favoritesSnapshot) in
-                                for favorite in (favoritesSnapshot.children.allObjects as! [DataSnapshot]) {
-                                    if favorite.key == String(self.selectedArtwork!.numID!) {
-                                        Database.database().reference(withPath: "Users").child(user.key).child("Favorites").child(favorite.key).removeValue()
+                if let artworkItem = item as? Artwork {
+                    if artworkItem.numID == self.selectedArtwork?.numID {
+                        self.initialViewController?.bostonMap.removeAnnotation(item)
+                        self.dismiss(animated: true, completion: nil)
+                        Database.database().reference(withPath: "Users").observeSingleEvent(of: .value, with: { (snapshot) in
+                            for user in (snapshot.children.allObjects as! [DataSnapshot]) {
+                                Database.database().reference(withPath: "Users").child(user.key).child("Favorites").observeSingleEvent(of: .value, with: { (favoritesSnapshot) in
+                                    for favorite in (favoritesSnapshot.children.allObjects as! [DataSnapshot]) {
+                                        if favorite.key == String(self.selectedArtwork!.numID!) {
+                                            Database.database().reference(withPath: "Users").child(user.key).child("Favorites").child(favorite.key).removeValue()
+                                        }
                                     }
-                                }
-                            })
-                        }
-                    })
+                                })
+                            }
+                        })
+                    }
                 }
             }
         }

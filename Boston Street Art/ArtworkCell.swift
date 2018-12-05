@@ -1,11 +1,3 @@
-//
-//  ArtworkCell.swift
-//  Boston Street Art
-//
-//  Created by Brian Bouchard on 11/12/18.
-//  Copyright © 2018 Brian Bouchard. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import Firebase
@@ -30,31 +22,11 @@ class ArtworkCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.alpha = 0.0
         if let viewController = vc {
             viewController.activity.startAnimating()
         }
     }
-        /*let activity = UIActivityIndicatorView(frame: CGRect(x: collection.frame.width / 2, y: collection.frame.height / 2, width: 20, height: 20))
-        activity.style = .whiteLarge
-        collection.addSubview(activity)
-        activity.startAnimating()*/
-
-    /*func getInfo() {
-        self.alpha = 0.0
-        Database.database().reference(withPath: "Artworks").child(self.idString!).child("Title").observeSingleEvent(of: .value) { (data) in
-            self.titleLabel.text = data.value as! String
-            Storage.storage().reference(withPath: self.idString!).getData(maxSize: 1000000, completion: { (data, error) in
-                if let imageData = data {
-                    let image = UIImage(data: imageData)
-                    let thumbnail = resizeImage(image: image!, newWidth: self.frame.width)
-                    let imageView = UIImageView(image: thumbnail!)
-                    self.addSubview(imageView)
-                    self.fadeTransition(1.0)
-                }
-            })
-        }
-
-    }*/
 }
 
 extension UIView {
