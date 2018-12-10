@@ -15,6 +15,8 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
     @IBOutlet var addressLabl: UILabel!
     @IBOutlet var artworkInfo: UITextView!
     @IBOutlet var addImageLabel: UILabel!
+    @IBOutlet var doneButton: UIButton!
+    @IBOutlet var editButton: UIButton!
 
     var selectedArtwork: Artwork?
     var initialViewController: MapViewController?
@@ -29,6 +31,19 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         activity.hidesWhenStopped = true
         picker.delegate = self
         activity.startAnimating()
+        doneButton.backgroundColor = UIColor.black
+        doneButton.layer.cornerRadius = 5
+        doneButton.layer.shadowColor = UIColor.lightGray.cgColor
+        doneButton.layer.shadowOffset = CGSize(width: 2, height: 2)
+        doneButton.layer.shadowRadius = 2
+        doneButton.layer.shadowOpacity = 1
+        editButton.backgroundColor = UIColor.black
+        editButton.layer.cornerRadius = 5
+        editButton.layer.shadowColor = UIColor.lightGray.cgColor
+        editButton.layer.shadowOffset = CGSize(width: 2, height: 2)
+        editButton.layer.shadowRadius = 2
+        editButton.layer.shadowOpacity = 1
+        
         if let artUnwrapped = self.selectedArtwork {
             self.titleLabel.text! = artUnwrapped.artTitle
             self.artistLabel.text! = artUnwrapped.artist
@@ -61,6 +76,15 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
 
         let artInfoTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleInfoTapGesture(gesture:)))
         artworkInfo.addGestureRecognizer(artInfoTapGesture)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: self)
+        if let currentArt = self.selectedArtwork {
+            if let editVC = segue.destination as? EditViewController {
+                editVC.selectedArtwork = currentArt
+            }
+        }
     }
 
     @objc func handleSwipeGesture(gesture: UISwipeGestureRecognizer) {
@@ -496,5 +520,9 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         alert.addAction(deleteAction)
         alert.addAction(cancelACtion)
         self.present(alert, animated: true)
+    }
+
+    @IBAction func doneButtonPressed(sender: Any?) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -118,7 +118,7 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
                         newArt.info = artInfo
                         newArt.address = artLocation
                         newArt.numID = UInt32(itemID)
-                        self.storageRef.child(itemID).getData(maxSize: 10000000000, completion: { (data, error) in
+                        self.storageRef.child(itemID).getData(maxSize: Int64(Int.max), completion: { (data, error) in
                             if let imageData = data {
                                 newArt.image = UIImage(data: imageData)
                                 newArt.thumbnail = resizeImage(image: newArt.image!, newWidth: 35)

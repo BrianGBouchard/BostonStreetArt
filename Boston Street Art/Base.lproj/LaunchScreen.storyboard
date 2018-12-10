@@ -35,12 +35,24 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright Brian Bouchard © 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHd-4R-oP7">
+                                <rect key="frame" x="42" y="626" width="291" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="PPR-Pj-5TV"/>
+                                    <constraint firstAttribute="width" constant="291" id="iKk-gn-gGq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="PingFangHK-Thin" family="PingFang HK" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="BVb-8f-YLJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="IDg-a8-tps"/>
                             <constraint firstItem="JIh-72-3NW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="O2m-n3-XBD"/>
                             <constraint firstItem="BVb-8f-YLJ" firstAttribute="top" secondItem="JIh-72-3NW" secondAttribute="bottom" constant="-0.5" id="bqv-BI-KOd"/>
+                            <constraint firstItem="mHd-4R-oP7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="f97-xu-d3v"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mHd-4R-oP7" secondAttribute="bottom" constant="20" id="h9p-5b-ZeG"/>
                             <constraint firstItem="JIh-72-3NW" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-17" id="vci-HU-LyN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

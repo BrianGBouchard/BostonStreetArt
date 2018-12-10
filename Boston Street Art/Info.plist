@@ -17,11 +17,17 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow access to camera to select photo to upload?</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
+	<key>NSLocationWhenInUseUseageDescription</key>
+	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow access to photo library to select photo to upload?</string>
 	<key>UILaunchStoryboardName</key>
@@ -34,11 +40,11 @@
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -47,13 +53,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>NSLocationWhenInUseUseageDescription</key>
-	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>&quot;Boston Street Art&quot; would like to know your location so that we can show you where you are on the map.  This might be helpful in finding art or creating new entries!</string>
 </dict>
 </plist>

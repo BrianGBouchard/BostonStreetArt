@@ -189,15 +189,18 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     }
 
     @objc func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let newView = storyboard?.instantiateViewController(withIdentifier: "artwork") as! ArtworkViewController
-        newView.initialViewController = self
-        if let annotationForView = view.annotation as! Artwork? {
-            newView.selectedArtwork = annotationForView
+        if view.annotation is MKUserLocation {
+            return
+        } else {
+            let newView = storyboard?.instantiateViewController(withIdentifier: "artwork") as! ArtworkViewController
+            newView.initialViewController = self
+            if let annotationForView = view.annotation as! Artwork? {
+                newView.selectedArtwork = annotationForView
+            }
+            view.isSelected = false
+            bostonMap.deselectAnnotation(view.annotation, animated: true)
+            self.present(newView, animated: true, completion: nil)
         }
-        view.isSelected = false
-        bostonMap.deselectAnnotation(view.annotation, animated: true)
-        self.present(newView, animated: true, completion: nil)
-        
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
