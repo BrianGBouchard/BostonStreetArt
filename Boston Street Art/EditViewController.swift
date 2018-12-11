@@ -60,11 +60,6 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
         picker.delegate = self
     }
 
-    /*override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        shouldShowWarning = false
-    }*/
-
     @objc func handleTapGesutre() {
         if titleTextField.isFirstResponder {
             titleTextField.resignFirstResponder()
@@ -159,6 +154,47 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
         } else {
             self.dismiss(animated: true, completion: nil)
         }
+    }
+
+    @IBAction func reportButtonPressed(sender: Any?) {
+        let reportAlert = UIAlertController(title: "Report this entry", message: "Would you like to reprt this entry for review?", preferredStyle: .alert)
+        let cancelAct = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let reportAction = UIAlertAction(title: "Report", style: .default) { (action) in
+            let menuAlert = UIAlertController(title: "What would you like to report?", message: nil, preferredStyle: .alert)
+            let noArtAction = UIAlertAction(title: "No art at location", style: .default, handler: { (action) in
+                let successAlert = UIAlertController(title: "Thank You", message: "Your resposne has been submitted and will be reviewed shortly", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                successAlert.addAction(okAction)
+                self.present(successAlert, animated: true)
+            })
+            let contentAction = UIAlertAction(title: "Inappropriate content", style: .default, handler: { (action) in
+                let successAlert = UIAlertController(title: "Thank You", message: "Your resposne has been submitted and will be reviewed shortly", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                successAlert.addAction(okAction)
+                self.present(successAlert, animated: true)
+            })
+            let otherAction = UIAlertAction(title: "Other", style: .default, handler: { (action) in
+                let otherAlert = UIAlertController(title: "Type your report here", message: nil, preferredStyle: .alert)
+                otherAlert.addTextField(configurationHandler: nil)
+                let sendAction = UIAlertAction(title: "Send", style: .default, handler: { (action) in
+                    let successAlert = UIAlertController(title: "Thank You", message: "Your resposne has been submitted and will be reviewed shortly", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                    successAlert.addAction(okAction)
+                    self.present(successAlert, animated: true)
+                })
+                otherAlert.addAction(sendAction)
+                otherAlert.addAction(cancelAct)
+                self.present(otherAlert, animated: true)
+            })
+            menuAlert.addAction(noArtAction)
+            menuAlert.addAction(contentAction)
+            menuAlert.addAction(otherAction)
+            menuAlert.addAction(cancelAct)
+            self.present(menuAlert, animated: true)
+        }
+        reportAlert.addAction(reportAction)
+        reportAlert.addAction(cancelAct)
+        self.present(reportAlert, animated: true)
     }
 
     // MARK: Editing the Image
@@ -261,42 +297,7 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        /* CONFIGURE THIS IN ARTWORK VC!
-        if let favoritesVC = self.favoritesViewController {
-            favoritesVC.needsUpdating = true
-        }
-        if let tabVC = self.initialViewController?.tabBarController {
-            if let viewControllers = tabVC.viewControllers {
-                if let favVC = viewControllers[1] as? FavoritesViewController {
-                    favVC.needsUpdating = true
-                }
-            }
-        } */
         let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
-        /*if let imageData = selectedImage.pngData() {
-            self.selectedArtwork!.image = UIImage(data: imageData)
-            uploadToFirebase(data: imageData)
-
-            if let mapViewController = initialViewController {
-                if mapViewController.bostonMap.annotations.contains(where: { (MKAnnotation) -> Bool in
-                    (MKAnnotation as? Artwork)!.numID == self.selectedArtwork?.numID }) {
-                    for item in mapViewController.bostonMap.annotations {
-                        if let artItem = item as? Artwork {
-                            if let artItemID = artItem.numID {
-                                if artItemID == selectedArtwork!.numID! {
-                                    mapViewController.bostonMap.removeAnnotation(item)
-                                    self.selectedArtwork?.thumbnail = resizeImage(image: UIImage(data: imageData)!, newWidth: 35)
-                                    mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    self.selectedArtwork?.thumbnail = resizeImage(image: UIImage(data: imageData)!, newWidth: 35)
-                    mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
-                }
-            }
-        } */
         shouldShowWarning = true
         noImageLabel.isHidden = true
         fullSizeImage = selectedImage
