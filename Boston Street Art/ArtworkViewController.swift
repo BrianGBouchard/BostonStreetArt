@@ -99,12 +99,25 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
 
     func setLabels() {
         if let artUnwrapped = self.selectedArtwork {
-            self.titleLabel.text! = artUnwrapped.artTitle
-            self.artistLabel.text! = artUnwrapped.artist
-            self.addressLabl.text! = artUnwrapped.address
-            self.artworkInfo.text = artUnwrapped.info
+            if artUnwrapped.artTitle != "[Add Title]" {
+                self.titleLabel.text! = artUnwrapped.artTitle
+            }
+
+            if artUnwrapped.artist != "[Add Artist]" {
+                self.artistLabel.text! = artUnwrapped.artist
+            }
+
+            if artUnwrapped.address != "[Add Address]" {
+                self.addressLabl.text! = artUnwrapped.address
+            }
+
+            if artUnwrapped.info != "[Add Information]" {
+                self.artworkInfo.text = artUnwrapped.info
+            }
+            
             if let pic = self.selectedArtwork!.image {
                 self.imageView.image = pic
+                self.addImageLabel.isHidden = true
                 self.activity.stopAnimating()
             } else {
                 self.addImageLabel.isHidden = false
@@ -517,7 +530,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         }
     }
 
-    @IBAction func deleteButtonPressed(sender: Any?) {
+    /*@IBAction func deleteButtonPressed(sender: Any?) {
         if let favoritesVC = self.favoritesViewController {
             favoritesVC.needsUpdating = true
         }
@@ -557,6 +570,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         alert.addAction(cancelACtion)
         self.present(alert, animated: true)
     }
+    */
 
     @IBAction func doneButtonPressed(sender: Any?) {
         self.dismiss(animated: true, completion: nil)

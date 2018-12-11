@@ -13,6 +13,7 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
     @IBOutlet var noImageLabel: UILabel!
     @IBOutlet var artImage: UIImageView!
     @IBOutlet var changesSavedIndicator: UIView!
+    @IBOutlet var doneButton: UIButton!
 
     var selectedArtwork: Artwork?
     var fullSizeImage: UIImage?
@@ -55,8 +56,11 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
 
         let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleImageTapGesture(gesture:)))
         artImage.addGestureRecognizer(imageTapGesture)
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeGesture.direction = .down
         let exitEditingTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesutre))
         self.view.addGestureRecognizer(exitEditingTapRecognizer)
+        self.view.addGestureRecognizer(swipeGesture)
         picker.delegate = self
     }
 
@@ -70,6 +74,10 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
         } else if infoTextView.isFirstResponder {
             infoTextView.resignFirstResponder()
         }
+    }
+
+    @objc func handleSwipe() {
+        perform(#selector(doneButtonPressed(sender:)), with: doneButton)
     }
 
     @IBAction func saveButtonPressed(sender: Any?) {
@@ -111,7 +119,6 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
                 if let imageData = pic.pngData() {
                     self.uploadToFirebase(data: imageData)
                 }
-                
             }
 
             perform(#selector(handleTapGesutre))
@@ -141,7 +148,7 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
         }
     }
 
-    @IBAction func doneButtonPressed(sender: Any?) {
+    @IBAction @objc func doneButtonPressed(sender: Any?) {
         if shouldShowWarning == true {
             let alert = UIAlertController(title: "Cancel without saving?", message: "Any changes will be lost.  Click Save to commit changes", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Leave", style: .default) { (action) in
@@ -156,18 +163,31 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
         }
     }
 
+    // MARK: Report an Entry
+
     @IBAction func reportButtonPressed(sender: Any?) {
+        let reportRef = Database.database().reference(withPath: "Reports")
         let reportAlert = UIAlertController(title: "Report this entry", message: "Would you like to reprt this entry for review?", preferredStyle: .alert)
         let cancelAct = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let reportAction = UIAlertAction(title: "Report", style: .default) { (action) in
             let menuAlert = UIAlertController(title: "What would you like to report?", message: nil, preferredStyle: .alert)
             let noArtAction = UIAlertAction(title: "No art at location", style: .default, handler: { (action) in
+                if let currentArt = self.selectedArtwork {
+                    if let artID = currentArt.numID {
+                        reportRef.child(String(artID)).setValue("No art at location")
+                    }
+                }
                 let successAlert = UIAlertController(title: "Thank You", message: "Your resposne has been submitted and will be reviewed shortly", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 successAlert.addAction(okAction)
                 self.present(successAlert, animated: true)
             })
             let contentAction = UIAlertAction(title: "Inappropriate content", style: .default, handler: { (action) in
+                if let currentArt = self.selectedArtwork {
+                    if let artID = currentArt.numID {
+                        reportRef.child(String(artID)).setValue("Inappropriate Content")
+                    }
+                }
                 let successAlert = UIAlertController(title: "Thank You", message: "Your resposne has been submitted and will be reviewed shortly", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 successAlert.addAction(okAction)
@@ -177,6 +197,13 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
                 let otherAlert = UIAlertController(title: "Type your report here", message: nil, preferredStyle: .alert)
                 otherAlert.addTextField(configurationHandler: nil)
                 let sendAction = UIAlertAction(title: "Send", style: .default, handler: { (action) in
+                    if let currentArt = self.selectedArtwork {
+                        if let artID = currentArt.numID {
+                            if let reportText = otherAlert.textFields?[0].text {
+                                reportRef.child(String(artID)).setValue(reportText)
+                            }
+                        }
+                    }
                     let successAlert = UIAlertController(title: "Thank You", message: "Your resposne has been submitted and will be reviewed shortly", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     successAlert.addAction(okAction)
@@ -287,7 +314,6 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
         } else {
             return
         }
-
     }
 
     func openCamera() {
@@ -305,6 +331,8 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
         dismiss(animated: true, completion: nil)
     }
 }
+
+// MARK: Delegate Methods
 
 extension EditViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
