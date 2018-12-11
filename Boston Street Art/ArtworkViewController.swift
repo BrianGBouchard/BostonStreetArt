@@ -22,8 +22,8 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
     var initialViewController: MapViewController?
     var favoritesViewController: FavoritesViewController?
     let dataRef = Database.database().reference(withPath: "Artworks")
-
     let picker = UIImagePickerController()
+    var shouldUpdate = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,25 +44,13 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         editButton.layer.shadowRadius = 2
         editButton.layer.shadowOpacity = 1
         
-        if let artUnwrapped = self.selectedArtwork {
-            self.titleLabel.text! = artUnwrapped.artTitle
-            self.artistLabel.text! = artUnwrapped.artist
-            self.addressLabl.text! = artUnwrapped.address
-            self.artworkInfo.text = artUnwrapped.info
-            if let pic = self.selectedArtwork!.image {
-                self.imageView.image = pic
-                self.activity.stopAnimating()
-            } else {
-                self.addImageLabel.isHidden = false
-                self.activity.stopAnimating()
-            }
-        }
+        setLabels()
 
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(gesture:)))
         swipeGesture.direction = .down
         self.view.addGestureRecognizer(swipeGesture)
 
-        let titleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTitleTapGesture(gesture:)))
+        /*let titleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTitleTapGesture(gesture:)))
         self.titleLabel.addGestureRecognizer(titleTapGesture)
 
         let artistTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleArtistTapGesture(gesture:)))
@@ -76,6 +64,53 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
 
         let artInfoTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleInfoTapGesture(gesture:)))
         artworkInfo.addGestureRecognizer(artInfoTapGesture)
+        */
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if shouldUpdate == true {
+            if let mapViewController = self.initialViewController {
+                for item in mapViewController.bostonMap.annotations {
+                    if let artItem = item as? Artwork {
+                        if let artItemID = artItem.numID {
+                            if artItemID == self.selectedArtwork?.numID {
+                                mapViewController.bostonMap.removeAnnotation(item)
+                                mapViewController.bostonMap.addAnnotation(self.selectedArtwork!)
+                            }
+                        }
+                    }
+                }
+            }
+
+            if let favoritesVC = self.favoritesViewController {
+                favoritesVC.needsUpdating = true
+            }
+
+            if let tabVC = self.initialViewController?.tabBarController {
+                if let viewControllers = tabVC.viewControllers {
+                    if let favVC = viewControllers[1] as? FavoritesViewController {
+                        favVC.needsUpdating = true
+                    }
+                }
+            }
+        }
+    }
+
+    func setLabels() {
+        if let artUnwrapped = self.selectedArtwork {
+            self.titleLabel.text! = artUnwrapped.artTitle
+            self.artistLabel.text! = artUnwrapped.artist
+            self.addressLabl.text! = artUnwrapped.address
+            self.artworkInfo.text = artUnwrapped.info
+            if let pic = self.selectedArtwork!.image {
+                self.imageView.image = pic
+                self.activity.stopAnimating()
+            } else {
+                self.addImageLabel.isHidden = false
+                self.activity.stopAnimating()
+            }
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -83,6 +118,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         if let currentArt = self.selectedArtwork {
             if let editVC = segue.destination as? EditViewController {
                 editVC.selectedArtwork = currentArt
+                editVC.artworkViewControlelr = self
             }
         }
     }
@@ -91,7 +127,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         self.dismiss(animated: true, completion: nil)
     }
 
-    @objc func handleTitleTapGesture(gesture: UITapGestureRecognizer) {
+    /*@objc func handleTitleTapGesture(gesture: UITapGestureRecognizer) {
         let alert = UIAlertController(title: nil, message: "Would you like to edit the artwork title?", preferredStyle: .alert)
         let edit = UIAlertAction(title: "Edit", style: .default) { (action) in
             let editAlert = UIAlertController(title: nil, message: "Enter a title", preferredStyle: .alert)
@@ -432,7 +468,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         alert.addAction(editAction)
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
-    }
+    } */
 
     @IBAction func button(sender: Any?) {
         if let currentUser = Auth.auth().currentUser?.uid, let currentArt = self.selectedArtwork?.numID {

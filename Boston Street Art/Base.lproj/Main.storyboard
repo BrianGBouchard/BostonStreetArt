@@ -432,7 +432,7 @@
                                     <constraint firstAttribute="height" constant="390" id="uFr-mG-eN2"/>
                                 </constraints>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cjD-vX-p6l">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cjD-vX-p6l">
                                 <rect key="frame" x="113" y="85" width="149" height="149"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="cjD-vX-p6l" secondAttribute="height" multiplier="1:1" id="LPN-Pm-OOs"/>
@@ -468,6 +468,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveButtonPressedWithSender:" destination="9Zt-EY-xHI" eventType="touchUpInside" id="4pr-yS-tCd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gza-ne-o7w">
                                 <rect key="frame" x="16" y="18" width="56" height="38"/>
@@ -483,6 +486,37 @@
                                     <action selector="doneButtonPressedWithSender:" destination="9Zt-EY-xHI" eventType="touchUpInside" id="QIX-82-WlX"/>
                                 </connections>
                             </button>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S7u-hf-Vil">
+                                <rect key="frame" x="123.5" y="95.5" width="128" height="128"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zU4-mu-cWj">
+                                        <rect key="frame" x="19" y="12" width="90" height="88"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="88" id="JUX-NE-AAJ"/>
+                                            <constraint firstAttribute="width" constant="90" id="zwZ-t3-29l"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Changes Saved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="syD-YF-JZ2">
+                                        <rect key="frame" x="11.5" y="94" width="105" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="105" id="pST-0h-hGu"/>
+                                            <constraint firstAttribute="height" constant="21" id="wgf-6R-zf5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="PingFangHK-Thin" family="PingFang HK" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="zU4-mu-cWj" firstAttribute="centerX" secondItem="S7u-hf-Vil" secondAttribute="centerX" id="L1D-Ia-zM5"/>
+                                    <constraint firstAttribute="height" constant="128" id="S6R-VA-chu"/>
+                                    <constraint firstAttribute="width" constant="128" id="lzP-2n-wiz"/>
+                                    <constraint firstItem="zU4-mu-cWj" firstAttribute="top" secondItem="S7u-hf-Vil" secondAttribute="top" constant="12" id="od1-mn-uWt"/>
+                                    <constraint firstItem="syD-YF-JZ2" firstAttribute="centerX" secondItem="S7u-hf-Vil" secondAttribute="centerX" id="pNe-Iv-HhU"/>
+                                    <constraint firstAttribute="bottom" secondItem="syD-YF-JZ2" secondAttribute="bottom" constant="13" id="tMf-8g-5Ee"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -498,7 +532,9 @@
                             <constraint firstItem="Pb8-GQ-1nY" firstAttribute="bottom" secondItem="uyU-Id-PxD" secondAttribute="bottom" constant="35" id="b4d-Ds-BTq"/>
                             <constraint firstItem="nyS-lb-iDf" firstAttribute="top" secondItem="cjD-vX-p6l" secondAttribute="top" id="bwD-0R-TXB"/>
                             <constraint firstItem="VOl-e9-kz7" firstAttribute="centerX" secondItem="cjD-vX-p6l" secondAttribute="centerX" id="edI-VB-i7E"/>
+                            <constraint firstItem="S7u-hf-Vil" firstAttribute="centerY" secondItem="cjD-vX-p6l" secondAttribute="centerY" id="fqa-gy-9ao"/>
                             <constraint firstItem="uyU-Id-PxD" firstAttribute="top" secondItem="cjD-vX-p6l" secondAttribute="bottom" constant="8" id="i5s-do-7Dw"/>
+                            <constraint firstItem="S7u-hf-Vil" firstAttribute="centerX" secondItem="cjD-vX-p6l" secondAttribute="centerX" id="k8b-ql-Lvf"/>
                             <constraint firstItem="FKs-6y-rt6" firstAttribute="top" secondItem="GuS-zy-fuW" secondAttribute="top" constant="18" id="z1X-WG-4Qo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Pb8-GQ-1nY"/>
@@ -506,6 +542,7 @@
                     <connections>
                         <outlet property="artImage" destination="cjD-vX-p6l" id="VCg-kq-zkk"/>
                         <outlet property="artistTextField" destination="CJA-RA-enT" id="F4s-9a-bc8"/>
+                        <outlet property="changesSavedIndicator" destination="S7u-hf-Vil" id="tc4-pw-AsS"/>
                         <outlet property="infoTextView" destination="Nps-Yc-Auw" id="hyR-vC-zBC"/>
                         <outlet property="locationTextField" destination="S4z-8t-bZb" id="GHT-m0-RBr"/>
                         <outlet property="noImageLabel" destination="VOl-e9-kz7" id="idJ-HL-VoU"/>
@@ -611,5 +648,6 @@
     <resources>
         <image name="Info" width="500" height="500"/>
         <image name="MapLogo" width="24" height="24"/>
+        <image name="checkmark" width="714" height="714"/>
     </resources>
 </document>
