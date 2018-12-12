@@ -85,22 +85,46 @@
 		A85D948921934B41008122B5 /* Boston Street Art */ = {
 			isa = PBXGroup;
 			children = (
+				A86374F121C0A345007C6CBC /* View Controllers */,
+				A86374F221C0A3A3007C6CBC /* Storyboards */,
+				A86374F321C0A3E8007C6CBC /* Resources */,
 				A85D948A21934B41008122B5 /* AppDelegate.swift */,
+				A85D94C8219A1752008122B5 /* ArtworkCell.swift */,
+				A85D94A321962675008122B5 /* Artwork.swift */,
+			);
+			path = "Boston Street Art";
+			sourceTree = "<group>";
+		};
+		A86374F121C0A345007C6CBC /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				A85D948C21934B41008122B5 /* MapViewController.swift */,
 				A85D94A121936F4F008122B5 /* ArtworkViewController.swift */,
 				A86374EF21BDD0CE007C6CBC /* EditViewController.swift */,
 				A85D94C6219A15AC008122B5 /* FavoritesViewController.swift */,
 				A86374ED21B86479007C6CBC /* InfoViewController.swift */,
-				A85D94A321962675008122B5 /* Artwork.swift */,
-				A85D94C8219A1752008122B5 /* ArtworkCell.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		A86374F221C0A3A3007C6CBC /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
 				A85D948E21934B41008122B5 /* Main.storyboard */,
-				A85D949421934B42008122B5 /* Assets.xcassets */,
 				A85D949621934B42008122B5 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		A86374F321C0A3E8007C6CBC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A85D949421934B42008122B5 /* Assets.xcassets */,
 				A85D949921934B42008122B5 /* Info.plist */,
 				A85D949F21934D95008122B5 /* GoogleService-Info.plist */,
 				A85D949121934B41008122B5 /* Boston_Street_Art.xcdatamodeld */,
 			);
-			path = "Boston Street Art";
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		C4AE8EB9AA095646AF241F4A /* Pods */ = {

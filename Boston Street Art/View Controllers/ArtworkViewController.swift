@@ -179,6 +179,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         if let favoritesVC = self.favoritesViewController {
             favoritesVC.needsUpdating = true
         }
+
         if let tabVC = self.initialViewController?.tabBarController {
             if let viewControllers = tabVC.viewControllers {
                 if let favVC = viewControllers[1] as? FavoritesViewController {
@@ -186,6 +187,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
                 }
             }
         }
+
         let alert = UIAlertController(title: "Delete this artwork from the map?", message: "This change will be permanent and cannot be undone.  These changes will affect all users, so please be courteous", preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: "Delete", style: .default) { (action) in
             self.dataRef.child(String(self.selectedArtwork!.numID!)).removeValue()
@@ -210,6 +212,7 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
                 }
             }
         }
+     
         let cancelACtion = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(deleteAction)
         alert.addAction(cancelACtion)
