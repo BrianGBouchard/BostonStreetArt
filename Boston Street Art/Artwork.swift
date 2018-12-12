@@ -1,6 +1,5 @@
 import Foundation
 import MapKit
-import CoreData
 
 class Artwork: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D

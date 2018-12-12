@@ -6,6 +6,8 @@ import Photos
 
 class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    // MARK: Properties
+
     @IBOutlet var titleTextField: UITextField!
     @IBOutlet var artistTextField: UITextField!
     @IBOutlet var locationTextField: UITextField!
@@ -23,6 +25,8 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
     var shouldShowWarning = false
     let picker = UIImagePickerController()
     let dataRef = Database.database().reference(withPath: "Artworks")
+
+    // MARK: View Controller Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +68,8 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
         picker.delegate = self
     }
 
+    // MARK: Gesture Recognizer Methods
+
     @objc func handleTapGesutre() {
         if titleTextField.isFirstResponder {
             titleTextField.resignFirstResponder()
@@ -77,8 +83,20 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
     }
 
     @objc func handleSwipe() {
-        perform(#selector(doneButtonPressed(sender:)), with: doneButton)
+        if infoTextView.isFirstResponder {
+            infoTextView.resignFirstResponder()
+        } else if titleTextField.isFirstResponder {
+            titleTextField.resignFirstResponder()
+        } else if artistTextField.isFirstResponder {
+            artistTextField.resignFirstResponder()
+        } else if locationTextField.isFirstResponder {
+            locationTextField.resignFirstResponder()
+        } else {
+            perform(#selector(doneButtonPressed(sender:)), with: doneButton)
+        }
     }
+
+    // MARK: Saving Changes
 
     @IBAction func saveButtonPressed(sender: Any?) {
         shouldShowWarning = false
@@ -141,6 +159,8 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
             }
         }
     }
+
+    // MARK: Actions
 
     @objc func changesSavedFadesOut() {
         UIView.animate(withDuration: 0.3) {
@@ -336,6 +356,11 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
 
 extension EditViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
+        let originalTransform = self.view.transform
+        let translatedUp = originalTransform.translatedBy(x: 0, y: -215)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.transform = translatedUp
+        })
         if textView.text == "Add Additional Information" {
             textView.text = ""
             textView.textColor = UIColor.darkText
@@ -344,6 +369,11 @@ extension EditViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
+        let originalTransform = self.view.transform
+        let translatedDown = originalTransform.translatedBy(x: 0, y: 215)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.transform = translatedDown
+        })
         if textView.text == "" {
             textView.text = "Add Additional Information"
             textView.textColor = UIColor.lightGray

@@ -1,8 +1,5 @@
 import Foundation
 import UIKit
-import Firebase
-import FirebaseAuth
-import FirebaseDatabase
 
 class ArtworkCell: UICollectionViewCell {
 
@@ -25,29 +22,6 @@ class ArtworkCell: UICollectionViewCell {
         if let viewController = vc {
             viewController.activity.startAnimating()
         }
-    }
-}
-
-extension UIView {
-    func fadeTransition(_ duration:CFTimeInterval) {
-        self.alpha = 0.0
-        let animation = CATransition()
-        animation.timingFunction = CAMediaTimingFunction(name:
-            CAMediaTimingFunctionName.easeInEaseOut)
-        animation.type = CATransitionType.fade
-        animation.duration = duration
-        layer.add(animation, forKey: CATransitionType.fade.rawValue)
-        self.alpha = 1.0
-    }
-
-    func fadeOutTransition(_ duration: CFTimeInterval) {
-        self.alpha = 0.0
-        let animation = CATransition()
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-        animation.type = CATransitionType.fade
-        animation.duration = duration
-        layer.add(animation, forKey: CATransitionType.fade.rawValue)
-        self.alpha = 1.0
     }
 }
 
