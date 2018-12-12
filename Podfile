@@ -13,5 +13,6 @@ target 'Boston Street Art' do
   pod 'FirebaseAuth'
   pod 'FirebaseDatabase'
   pod 'FirebaseStorage'
+  pod 'Crashlytics'
 
 end

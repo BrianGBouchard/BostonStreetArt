@@ -21,6 +21,8 @@
 		A85D94C9219A1752008122B5 /* ArtworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85D94C8219A1752008122B5 /* ArtworkCell.swift */; };
 		A86374EE21B86479007C6CBC /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86374ED21B86479007C6CBC /* InfoViewController.swift */; };
 		A86374F021BDD0CE007C6CBC /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86374EF21BDD0CE007C6CBC /* EditViewController.swift */; };
+		A86374F721C16263007C6CBC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A86374F621C16263007C6CBC /* Localizable.strings */; };
+		A86374F921C1A39A007C6CBC /* LocalizableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86374F821C1A39A007C6CBC /* LocalizableString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		A85D94C8219A1752008122B5 /* ArtworkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkCell.swift; sourceTree = "<group>"; };
 		A86374ED21B86479007C6CBC /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		A86374EF21BDD0CE007C6CBC /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		A86374F621C16263007C6CBC /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		A86374F821C1A39A007C6CBC /* LocalizableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableString.swift; sourceTree = "<group>"; };
 		F3CF20D7AF76ECE592DE78E3 /* Pods_Boston_Street_Art.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Boston_Street_Art.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -85,6 +89,8 @@
 		A85D948921934B41008122B5 /* Boston Street Art */ = {
 			isa = PBXGroup;
 			children = (
+				A86374F621C16263007C6CBC /* Localizable.strings */,
+				A86374F821C1A39A007C6CBC /* LocalizableString.swift */,
 				A85D948A21934B41008122B5 /* AppDelegate.swift */,
 				A85D94C8219A1752008122B5 /* ArtworkCell.swift */,
 				A85D94A321962675008122B5 /* Artwork.swift */,
@@ -180,6 +186,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A86374F721C16263007C6CBC /* Localizable.strings in Resources */,
 				A85D949821934B42008122B5 /* LaunchScreen.storyboard in Resources */,
 				A85D949521934B42008122B5 /* Assets.xcassets in Resources */,
 				A85D949021934B41008122B5 /* Main.storyboard in Resources */,
@@ -252,6 +259,7 @@
 				A85D949321934B41008122B5 /* Boston_Street_Art.xcdatamodeld in Sources */,
 				A85D94C9219A1752008122B5 /* ArtworkCell.swift in Sources */,
 				A85D948D21934B41008122B5 /* MapViewController.swift in Sources */,
+				A86374F921C1A39A007C6CBC /* LocalizableString.swift in Sources */,
 				A85D94A421962675008122B5 /* Artwork.swift in Sources */,
 				A85D94A221936F4F008122B5 /* ArtworkViewController.swift in Sources */,
 				A85D94C7219A15AD008122B5 /* FavoritesViewController.swift in Sources */,

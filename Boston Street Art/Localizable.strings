@@ -1,0 +1,77 @@
+// MARK: Map View Controller
+
+"BAS_BASTitle" = "Boston Street Art";
+"BAS_Map" = "Map";
+"BAS_Satellite" = "Satellite";
+
+// MARK: Info View Controller
+
+"BAS_Done" = "Done";
+"BAS_Information" = "Boston Street Art is a collaborative platform for mapping street art installations in and around the city of Boston.  Users can add and edit entries to help the community find and enjoy works by local artists.";
+"BAS_Information2" = "To create an entry, simply press and hold your finger on the map at the location where the art is located. Enjoy!";
+
+// MARK: Artwork View Controller
+
+"BAS_Favorite" = "Favorite";
+"BAS_Edit" = "Edit";
+"BAS_noImage" = "[No Image]";
+"BAS_Title" = "Title:";
+"BAS_Artist" = "Artist:";
+"BAS_Location" = "Location:";
+"BAS_EditFavorites" = "Edit Favorites List";
+"BAS_AddFavoritePrompt" = "Add this artwork to your favorites?";
+"BAS_RemoveFAvoritePrompt" = "Remove this artwork from your favorites?";
+"BAS_Add" = "Add";
+"BAS_Remove" = "Remove";
+"BAS_Cancel" = "Cancel";
+
+// MARK: Edit View Controller
+
+"BAS_Save" = "Save";
+"BAS_Image" = "Image";
+"BAS_Changes" = "Changes Saved";
+"BAS_TitleLabel" = "Title";
+"BAS_ArtistLabel" = "Artist";
+"BAS_LocationLabel" = "Address/Location";
+"BAS_InfoLabel" = "Additional Information";
+"BAS_Report" = "Report";
+"BAS_TitlePlaceholder" = "Add Artwork Title";
+"BAS_ArtistPlaceholder" = "Add Artist";
+"BAS_LocationPlaceholder" = "Add Location";
+"BAS_InfoPlaceholder" = "Add Additional Information";
+"BAS_CancelPrompt" = "Cancel without saving?";
+"BAS_CancelPromptMessage" = "Any changes will be lost.  Click Save to commit changes";
+"BAS_Leave" = "Leave";
+"BAS_KeepEditing" = "Keep Editing";
+"BAS_ReportTitle" = "Report this entry";
+"BAS_Reportmessage" = "Would you like to report this entry for review?";
+"BAS_ReportMenu" = "What would you like to report?";
+"BAS_NoArtReport" = "No art at location";
+"BAS_ReportThanks" = "Thank You";
+"BAS_ReportResponse" = "Your resposne has been submitted and will be reviewed shortly";
+"BAS_Ok" = "Ok";
+"BAS_InappropriateReport" = "Inappropriate content";
+"BAS_ReportOther" = "Other";
+"BAS_ReportOtherPrompt" = "Type your report here";
+"BAS_SendReport" = "Send";
+"BAS_EditImage" = "Edit image?";
+"BAS_SelectImage" = "Select Image";
+"BAS_Library" = "Library";
+"BAS_Camera" = "Camera";
+"BAS_CameraError" = "Camera access not enabled";
+"BAS_CameraErrorMessage" = "You can configure your settings to allow camera access in Settings";
+"BAS_Settings" = "Settings";
+"BAS_Error" = "Error";
+"BAS_CameraUnavailable" = "Camera unavailable";
+"BAS_LibraryError" = "Photo Library access not enabled";
+"BAS_LibraryErrorMessage" = "You can configure your settings to allow Library access in Settings";
+
+// MARK: Favorites View Controller
+
+"BAS_NoFavorites" = "No favorites";
+"BAS_NoTitle" = "[No Title]";
+
+
+
+
+

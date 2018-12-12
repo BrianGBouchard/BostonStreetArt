@@ -118,13 +118,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpz-i8-uAp">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To create an entry, simply press and hold your finger on the map at the location where the art is located. Enjoy!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpz-i8-uAp">
                                 <rect key="frame" x="49.5" y="349" width="276" height="182"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="182" id="338-k0-PNN"/>
                                     <constraint firstAttribute="width" constant="276" id="jvF-sa-Z79"/>
                                 </constraints>
-                                <string key="text">To create an entry, simply press and hold your finger on the map at the location where the art is located.  To edit, tap on any part of the entry you would like to update.  Enjoy!</string>
                                 <fontDescription key="fontDescription" name="PingFangHK-Thin" family="PingFang HK" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>

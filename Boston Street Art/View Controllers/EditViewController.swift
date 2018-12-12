@@ -352,7 +352,7 @@ class EditViewController: UIViewController, UIGestureRecognizerDelegate, UIImage
     }
 }
 
-// MARK: Delegate Methods
+// MARK: Text View Delegate Methods
 
 extension EditViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -384,6 +384,8 @@ extension EditViewController: UITextViewDelegate {
         shouldShowWarning = true
     }
 }
+
+// MARK: Text Field Delegate Methods
 
 extension EditViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {

@@ -5,7 +5,7 @@ import FirebaseStorage
 import Firebase
 import FirebaseDatabase
 
-class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class FavoritesViewController: UIViewController, UICollectionViewDelegateFlowLayout {
 
     // MARK: Properties
 
@@ -105,8 +105,11 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate, UICol
             self.noFavoritesLabel.alpha = 1.0
         }
     }
+}
 
-    // MARK: Delegate Methods
+// MARK: Collection View Delegate Methods
+
+extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

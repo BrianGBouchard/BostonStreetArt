@@ -7,7 +7,7 @@ import Photos
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
+class MapViewController: UIViewController, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
 
     // MARK: Properties
     
@@ -181,12 +181,16 @@ class MapViewController: UIViewController, UIImagePickerControllerDelegate, UINa
 
     // MARK: Map Methods
 
+
     func createMap() {
         let center = CLLocationCoordinate2D(latitude: 42.355527, longitude: -71.093976)
         let span = MKCoordinateSpan(latitudeDelta: 0.13, longitudeDelta: 0.13)
         let region = MKCoordinateRegion(center: center, span: span)
         bostonMap.setRegion(region, animated: true)
     }
+}
+
+extension MapViewController: MKMapViewDelegate {
 
     @objc func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if view.annotation is MKUserLocation {

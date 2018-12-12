@@ -1,12 +1,10 @@
 import Foundation
 import UIKit
-import FirebaseStorage
 import Firebase
+import FirebaseStorage
 import FirebaseDatabase
-import AVKit
-import Photos
 
-class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate {
 
     // MARK: Properties
 
@@ -24,7 +22,6 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
     var initialViewController: MapViewController?
     var favoritesViewController: FavoritesViewController?
     let dataRef = Database.database().reference(withPath: "Artworks")
-    let picker = UIImagePickerController()
     var shouldUpdate = false
 
     // MARK: View Controller Methods
@@ -33,7 +30,6 @@ class ArtworkViewController: UIViewController, UIGestureRecognizerDelegate, UIIm
         super.viewDidLoad()
         addImageLabel.isHidden = true
         activity.hidesWhenStopped = true
-        picker.delegate = self
         activity.startAnimating()
         setLabels()
 
